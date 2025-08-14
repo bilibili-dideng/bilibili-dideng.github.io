@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minecraft Kibitect - 我的世界工具箱</title>
+  <style>
+    /* 深绿+金色主题 - 稳重且有 Minecraft 风格 */
+    :root {
+      --primary: #2c5f2d;        /* 深青绿 */
+      --primary-light: #3a7d3b;
+      --secondary: #f9b233;      /* 金色 */
+      --text: #333;
+      --text-light: #f0f0f0;
+      --bg-light: #f8f9fa;
+      --bg-card: #ffffff;
+      --border: #d0e0d1;
+      --shadow: rgba(44, 95, 45, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* 导航栏 */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      border-radius: 12px 12px 0 0;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .logo-text span {
+      color: var(--secondary);
+    }
+
+    .nav-links a {
+      margin-left: 2rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* 英雄区域 */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, var(--primary), #1e441f);
+      color: var(--text-light);
+      border-radius: 16px;
+      margin-bottom: 3rem;
+      box-shadow: 0 10px 30px rgba(44, 95, 45, 0.2);
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      margin-bottom: 1rem;
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero h1 span {
+      color: var(--secondary);
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      max-width: 800px;
+      margin: 1rem auto;
+      opacity: 0.9;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--secondary);
+      color: #333;
+      box-shadow: 0 5px 15px rgba(249, 178, 51, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(249, 178, 51, 0.6);
+    }
+
+    /* 功能模块 - 初期版本 */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 5px 20px var(--shadow);
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* 状态标签 */
+    .status-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    .status-dev {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+
+    .status-planned {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+
+    /* 下载与开源 */
+    .download-section {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--bg-card);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px var(--shadow);
+      margin: 4rem 0;
+    }
+
+    .download-section h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    /* 页脚 */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      color: #666;
+      font-size: 0.95rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      .hero p {
+        font-size: 1.2rem;
+      }
+      .nav-links a {
+        margin-left: 1rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+  <!-- Font Awesome 图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 导航栏 -->
+    <header>
+      <div class="navbar">
+        <div class="logo-text">Minecraft <span>Kibitect</span></div>
+        <div class="nav-links">
+          <a href="#features">功能</a>
+          <a href="#download">下载</a>
+          <a href="https://github.com/bilibili-dideng/Minecraft-Kibitect" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+      <h1>构建你的<span>世界</span></h1>
+      <p>专为《我的世界》玩家打造的桌面工具箱，让管理与探索更高效。</p>
+      <a href="#download" class="btn btn-primary">
+        <i class="fas fa-download"></i> 下载 v0.0.0 (最早期版)
+      </a>
+    </section>
+
+    <!-- 功能特性 -->
+    <section id="features">
+      <h2 style="text-align:center; font-size:2.5rem; color:var(--primary); margin-bottom:3rem;">当前功能</h2>
+      <div class="features">
+
+        <!-- 功能 1：存档查看 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-folder-open"></i>
+          </div>
+          <h3 class="feature-title">存档查看器</h3>
+          <p>浏览你的 Minecraft 查看名称、游戏模式、游玩时间、物品栏的物品等信息。</p>
+          <div class="status-badge status-dev">vv0.0.0 已实现</div>
+        </div>
+
+        <!-- 功能 2：工具网站 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-globe"></i>
+          </div>
+          <h3 class="feature-title">实用工具网站</h3>
+          <p>集成多个热门 Minecraft 在线工具，如结构生成器、坐标转换器、材质包站等。</p>
+          <div class="status-badge status-dev">v0.0.0 已集成</div>
+        </div>
+
+        <!-- 未来功能占位 -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <h3 class="feature-title">更多功能开发中</h3>
+          <p>NBT编辑器等正在规划中。</p>
+          <div class="status-badge status-planned">敬请期待</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 下载 -->
+    <section class="download-section" id="download">
+      <h2>📥 下载 Kibitect</h2>
+      <p>当前版本: v0.0.0 (最早期版) | 支持平台: Windows</p>
+      <a href="https://github.com/bilibili-dideng/Minecraft-Kibitect/releases/tag/0.0.0-Base" class="btn btn-primary">
+        <i class="fas fa-download"></i> 下载 .exe
+      </a>
+      <p style="margin-top: 1rem;">
+        <small>开源免费 | 无广告 | 仍在积极开发中</small>
+      </p>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+      <p>© 2025 <strong>Minecraft Kibitect</strong> 由 <a href="https://github.com/bilibili-dideng" target="_blank">地灯dideng</a> 开发</p>
+      <p><small>《我的世界》是 Mojang Studios 的注册商标。本工具与 Mojang 无关联。</small></p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
