@@ -30,6 +30,10 @@
       color: var(--text);
       line-height: 1.7;
       min-height: 100vh;
+      /* 添加背景纹理，增加层次感 */
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(249, 178, 51, 0.05) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(44, 95, 45, 0.05) 0%, transparent 25%);
     }
 
     .container {
@@ -38,10 +42,11 @@
       padding: 20px;
     }
 
-    /* 导航栏 */
+    /* 导航栏 - 升级为毛玻璃效果 */
     header {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px); /* Safari 兼容 */
       border-bottom: 1px solid var(--border);
       border-radius: 12px 12px 0 0;
       padding: 1rem 2rem;
@@ -50,6 +55,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: all 0.3s ease; /* 平滑过渡 */
     }
 
     .navbar {
@@ -66,6 +72,7 @@
 
     .logo-text span {
       color: var(--secondary);
+      text-shadow: 0 0 8px rgba(249, 178, 51, 0.4); /* 添加金色光晕 */
     }
 
     .nav-links a {
@@ -75,7 +82,7 @@
       font-weight: 600;
       font-size: 1.1rem;
       position: relative;
-      transition: color 0.3s;
+      transition: all 0.3s ease;
     }
 
     .nav-links a:hover {
@@ -90,22 +97,24 @@
       width: 0;
       height: 2px;
       background: var(--secondary);
-      transition: width 0.3s;
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover::after {
       width: 100%;
     }
 
-    /* 英雄区域 */
+    /* 英雄区域 - 增强视觉冲击力 */
     .hero {
       text-align: center;
-      padding: 5rem 2rem;
+      padding: 6rem 2rem;
       background: linear-gradient(135deg, var(--primary), #1e441f);
       color: var(--text-light);
       border-radius: 16px;
       margin-bottom: 3rem;
       box-shadow: 0 10px 30px rgba(44, 95, 45, 0.2);
+      position: relative;
+      overflow: hidden;
     }
 
     .hero h1 {
@@ -126,6 +135,7 @@
       opacity: 0.9;
     }
 
+    /* 按钮 - 增加悬停动画 */
     .btn {
       display: inline-block;
       text-decoration: none;
@@ -135,6 +145,7 @@
       border-radius: 50px;
       margin: 2rem 1rem;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     .btn-primary {
@@ -148,7 +159,7 @@
       box-shadow: 0 8px 25px rgba(249, 178, 51, 0.6);
     }
 
-    /* 功能模块 - 初期版本 */
+    /* 特性网格 - 增加悬停动画 */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -163,11 +174,13 @@
       box-shadow: 0 5px 20px var(--shadow);
       border: 1px solid var(--border);
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: all 0.4s ease;
     }
 
     .feature-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(44, 95, 45, 0.15);
+      border-color: var(--primary-light);
     }
 
     .feature-icon {
@@ -203,6 +216,39 @@
       background: #d1ecf1;
       color: #0c5460;
       border: 1px solid #bee5eb;
+    }
+
+    /* 开发日志 */
+    .changelog {
+      background: var(--bg-card);
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px var(--shadow);
+      margin: 4rem 0;
+    }
+
+    .changelog h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .log-item {
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;
+      border-left: 4px solid var(--primary-light);
+    }
+
+    .log-item h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .log-item .log-date {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.8rem;
     }
 
     /* 下载与开源 */
@@ -267,6 +313,7 @@
         <div class="logo-text">Minecraft <span>Kibitect</span></div>
         <div class="nav-links">
           <a href="#features">功能</a>
+          <a href="#changelog">日志</a>
           <a href="#download">下载</a>
           <a href="https://github.com/bilibili-dideng/Minecraft-Kibitect" target="_blank">GitHub</a>
         </div>
@@ -276,15 +323,18 @@
     <!-- 英雄区域 -->
     <section class="hero">
       <h1>构建你的<span>世界</span></h1>
-      <p>专为《我的世界》玩家打造的桌面工具箱，让管理与探索更高效。</p>
+      <p>由 DGF Studio 开发，专为《我的世界》玩家打造的桌面工具箱，让管理与探索更高效。</p>
+      <a href="#changelog" class="btn btn-primary">
+        <i class="fas fa-ruler-combined"></i> 查看最新功能
+      </a>
       <a href="#download" class="btn btn-primary">
-        <i class="fas fa-download"></i> 下载 v0.0.0 (最早期版)
+        <i class="fas fa-download"></i> 下载 v0.0.1-Base
       </a>
     </section>
 
     <!-- 功能特性 -->
     <section id="features">
-      <h2 style="text-align:center; font-size:2.5rem; color:var(--primary); margin-bottom:3rem;">当前功能</h2>
+      <h2 style="text-align:center; font-size:2.5rem; color:var(--primary); margin-bottom:3rem;">核心功能</h2>
       <div class="features">
 
         <!-- 功能 1：存档查看 -->
@@ -293,8 +343,8 @@
             <i class="fas fa-folder-open"></i>
           </div>
           <h3 class="feature-title">存档查看器</h3>
-          <p>浏览你的 Minecraft 查看名称、游戏模式、游玩时间、物品栏的物品等信息。</p>
-          <div class="status-badge status-dev">vv0.0.0 已实现</div>
+          <p>浏览你的 Minecraft 世界列表，查看名称、游戏模式、最后游玩时间等信息。</p>
+          <div class="status-badge status-dev">v0.0.1-Base 已实现</div>
         </div>
 
         <!-- 功能 2：工具网站 -->
@@ -304,27 +354,38 @@
           </div>
           <h3 class="feature-title">实用工具网站</h3>
           <p>集成多个热门 Minecraft 在线工具，如结构生成器、坐标转换器、材质包站等。</p>
-          <div class="status-badge status-dev">v0.0.0 已集成</div>
+          <div class="status-badge status-dev">v0.0.1-Base 已集成</div>
         </div>
 
-        <!-- 未来功能占位 -->
+        <!-- 功能 3：坐标计算 -->
         <div class="feature-card">
           <div class="feature-icon">
-            <i class="fas fa-cogs"></i>
+            <i class="fas fa-ruler-combined"></i>
           </div>
-          <h3 class="feature-title">更多功能开发中</h3>
-          <p>NBT编辑器等正在规划中。</p>
-          <div class="status-badge status-planned">敬请期待</div>
+          <h3 class="feature-title">坐标计算器</h3>
+          <p>耗时不知多少小时，终于上线！支持主世界与下界坐标的相互换算，并能计算两点间的距离。</p>
+          <div class="status-badge status-dev">v0.0.1-Base 新增</div>
         </div>
 
       </div>
     </section>
 
+    <!-- 开发日志 -->
+    <section id="changelog" class="changelog">
+      <h2>开发日志</h2>
+      <div class="log-item">
+        <h3>v0.0.1-Base</h3>
+        <div class="log-date">2025年4月13日</div>
+        <p>发布首个公开版本！包含核心功能：坐标计算器、存档查看器、工具网站集成。这是一个坚实的基础，未来可期！</p>
+      </div>
+      <!-- 你可以在这里继续添加新的日志条目 -->
+    </section>
+
     <!-- 下载 -->
     <section class="download-section" id="download">
       <h2>📥 下载 Minecraft Kibitect</h2>
-      <p>当前版本: v0.0.0 (最早期版) | 支持平台: Windows</p>
-      <a href="https://github.com/bilibili-dideng/Minecraft-Kibitect/releases/download/0.0.0-Base/Minecraft-Kibitect_0.0.0-base.zip" class="btn btn-primary">
+      <p>当前版本: v0.0.1-Base | 支持平台: Windows</p>
+      <a href="https://github.com/bilibili-dideng/Minecraft-Kibitect/releases/download/0.0.1-Base/Minecraft-Kibitect_0.0.1-Base.zip" class="btn btn-primary">
         <i class="fas fa-download"></i> 下载 zip
       </a>
       <p style="margin-top: 1rem;">
@@ -334,7 +395,7 @@
 
     <!-- 页脚 -->
     <footer>
-      <p>© 2025 <strong>Minecraft Kibitect</strong> 由 <a href="https://github.com/bilibili-dideng" target="_blank">地灯dideng</a> 开发</p>
+      <p>由 <a href="https://dgf-studio.mysxl.cn/" target="_blank">DGF Studio</a> 开发 | 作者：<a href="https://github.com/bilibili-dideng" target="_blank">地灯 dideng</a></p>
       <p><small>《我的世界》是 Mojang Studios 的注册商标。本工具与 Mojang 无关联。</small></p>
     </footer>
 
