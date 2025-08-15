@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcf02d14-9446-4ef0-914b-7f795ca7b336" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/DGF-Studio/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Minecraft-Kibitect/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Minecraft-Kibitect/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DGF-Studio/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/DGF-Studio/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
