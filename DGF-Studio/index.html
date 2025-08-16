@@ -5,17 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DGF Studio - Code and We</title>
   <style>
-    /* 灵感来自“命令助手”的粉色主题 */
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     :root {
-      --pink-primary: #ff6b81;     /* 主粉红 */
-      --pink-darker: #e05666;     /* 深粉红 */
-      --pink-light: #fff5f7;      /* 浅粉背景 */
-      --pink-medium: #ffe6eb;
-      --pink-lighter: #fff0f3;
+      --blue-primary: #1e6fd9;
+      --blue-darker: #0052a3;
+      --blue-light: #f0f5ff;
+      --blue-medium: #d0e7ff;
+      --blue-lighter: #e6f3ff;
       --text-primary: #2c3e50;
       --text-secondary: #7f8c8d;
-      --border-color: #f0d8dc;
-      --shadow: 0 5px 20px rgba(232, 156, 184, 0.1);
+      --border-color: #a0d0ff;
+      --shadow: 0 5px 20px rgba(30, 111, 217, 0.18);
     }
 
     * {
@@ -26,14 +31,25 @@
 
     body {
       font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-      background-color: var(--pink-light);
+      background: linear-gradient(-45deg, #1e6fd9, #3a89ff, white, #0052a3, #1e6fd9);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
       color: var(--text-primary);
       line-height: 1.6;
       min-height: 100vh;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(255, 107, 156, 0.1) 0%, transparent 20%);
+      position: relative;
       overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(240, 245, 255, 0.10);
+      z-index: -1;
     }
 
     .container {
@@ -44,14 +60,14 @@
 
     /* 导航栏 - 毛玻璃效果 */
     header {
-      background: rgba(255, 245, 247, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-color);
       border-radius: 12px 12px 0 0;
       padding: 1rem 2rem;
       margin-bottom: 2rem;
-      box-shadow: var(--shadow);
+      box-shadow: 0 5px 20px rgba(30, 111, 217, 0.1);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -59,8 +75,8 @@
     }
 
     header.scrolled {
-      background-color: rgba(255, 245, 247, 0.98);
-      box-shadow: 0 5px 20px rgba(232, 156, 184, 0.2);
+      background-color: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 5px 20px rgba(30, 111, 217, 0.2);
     }
 
     .navbar {
@@ -92,7 +108,7 @@
     }
 
     .brand-name span {
-      color: var(--pink-darker);
+      color: var(--blue-darker);
     }
 
     .nav-links a {
@@ -106,7 +122,7 @@
     }
 
     .nav-links a:hover {
-      color: var(--pink-darker);
+      color: var(--blue-darker);
     }
 
     .nav-links a::after {
@@ -116,7 +132,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--pink-darker);
+      background: var(--blue-darker);
       transition: width 0.3s;
     }
 
@@ -124,7 +140,6 @@
       width: 100%;
     }
 
-    /* 通用区域样式 */
     .section {
       margin: 6rem 0;
       opacity: 0;
@@ -137,7 +152,6 @@
       transform: translateY(0);
     }
 
-    /* 项目卡片 */
     .projects {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -156,20 +170,19 @@
 
     .project-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 15px 35px rgba(232, 156, 184, 0.2);
+      box-shadow: 0 15px 35px rgba(30, 111, 217, 0.2);
     }
 
     .project-title {
       font-size: 1.6rem;
       margin-bottom: 1rem;
-      color: var(--pink-darker);
+      color: var(--blue-darker);
       font-weight: 700;
     }
 
-    /* 列表样式 - 为<li>往前移4格 */
     .project-detail ul {
       list-style-type: none;
-      padding-left: 0; /* 移除默认缩进 */
+      padding-left: 0;
       margin: 1.5rem 0;
     }
 
@@ -177,19 +190,18 @@
       padding: 0.8rem 0;
       font-size: 1.1rem;
       position: relative;
-      padding-left: 2rem; /* 为图标留出空间 */
+      padding-left: 2rem;
     }
 
     .project-detail li::before {
       content: "•";
-      color: var(--pink-darker);
+      color: var(--blue-darker);
       font-weight: bold;
       position: absolute;
       left: 0;
       top: 0.8rem;
     }
 
-    /* 成员区域 */
     .members {
       margin: 5rem 0;
       text-align: center;
@@ -197,7 +209,7 @@
 
     .members h2 {
       font-size: 2.5rem;
-      color: var(--pink-darker);
+      color: var(--blue-darker);
       margin-bottom: 3rem;
       position: relative;
     }
@@ -207,7 +219,7 @@
       display: block;
       width: 100px;
       height: 4px;
-      background: linear-gradient(90deg, var(--pink-primary), var(--pink-darker));
+      background: linear-gradient(90deg, var(--blue-primary), var(--blue-darker));
       margin: 1.2rem auto;
       border-radius: 10px;
     }
@@ -232,7 +244,7 @@
 
     .member:hover {
       transform: translateY(-10px);
-      box-shadow: 0 15px 35px rgba(232, 156, 184, 0.2);
+      box-shadow: 0 15px 35px rgba(30, 111, 217, 0.2);
     }
 
     .member-avatar {
@@ -242,7 +254,7 @@
       object-fit: cover;
       margin-bottom: 1rem;
       border: 5px solid white;
-      box-shadow: 0 5px 15px rgba(232, 156, 184, 0.2);
+      box-shadow: 0 5px 15px rgba(30, 111, 217, 0.2);
     }
 
     .member-name {
@@ -262,7 +274,6 @@
       color: #666;
     }
 
-    /* 开发日志 */
     .changelog {
       background: white;
       border-radius: 16px;
@@ -274,7 +285,7 @@
 
     .changelog h2 {
       font-size: 2.5rem;
-      color: var(--pink-darker);
+      color: var(--blue-darker);
       margin-bottom: 2rem;
       text-align: center;
     }
@@ -282,7 +293,7 @@
     .log-item {
       margin-bottom: 2rem;
       padding-left: 1.5rem;
-      border-left: 4px solid var(--pink-darker);
+      border-left: 4px solid var(--blue-darker);
     }
 
     .log-item h3 {
@@ -296,9 +307,8 @@
       margin-bottom: 0.8rem;
     }
 
-    /* 关于区域 */
     .about {
-      background: linear-gradient(135deg, var(--pink-lighter), var(--pink-medium));
+      background: linear-gradient(135deg, var(--blue-lighter), var(--blue-medium));
       border-radius: 16px;
       padding: 4rem 2rem;
       box-shadow: var(--shadow);
@@ -309,7 +319,7 @@
 
     .about h2 {
       font-size: 2.5rem;
-      color: var(--pink-darker);
+      color: var(--blue-darker);
       margin-bottom: 2rem;
     }
 
@@ -320,7 +330,6 @@
       margin: 0 auto;
     }
 
-    /* 联系方式 */
     .contact {
       background: white;
       border-radius: 16px;
@@ -333,7 +342,7 @@
 
     .contact h2 {
       font-size: 2.5rem;
-      color: var(--pink-darker);
+      color: var(--blue-darker);
       margin-bottom: 2rem;
     }
 
@@ -357,10 +366,9 @@
     }
 
     .contact-links a:hover {
-      color: var(--pink-darker);
+      color: var(--blue-darker);
     }
 
-    /* 按钮 */
     .btn {
       display: inline-block;
       text-decoration: none;
@@ -374,17 +382,16 @@
     }
 
     .btn-primary {
-      background: var(--pink-darker);
+      background: var(--blue-darker);
       color: white;
-      box-shadow: 0 5px 15px rgba(232, 156, 184, 0.2);
+      box-shadow: 0 5px 15px rgba(30, 111, 217, 0.2);
     }
 
     .btn-primary:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(232, 156, 184, 0.4);
+      box-shadow: 0 8px 25px rgba(30, 111, 217, 0.4);
     }
 
-    /* 页脚 */
     footer {
       text-align: center;
       padding: 3rem 1rem 2rem;
@@ -395,7 +402,7 @@
     }
 
     footer a {
-      color: var(--pink-darker);
+      color: var(--blue-darker);
       text-decoration: none;
     }
 
@@ -407,6 +414,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
+  <!-- 全屏纸屑动画画布 -->
+  <canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></canvas>
 
   <!-- 导航栏 -->
   <header id="header">
@@ -440,7 +450,7 @@
   <!-- 项目 -->
   <section id="projects" class="section">
     <div class="container">
-      <h2 style="text-align:center; font-size:2.5rem; color:var(--pink-darker); margin-bottom:3rem;">我们的项目</h2>
+      <h2 style="text-align:center; font-size:2.5rem; color:var(--blue-darker); margin-bottom:3rem;">我们的项目</h2>
       <div class="projects">
         <div class="project-card">
           <h3 class="project-title"><i class="fas fa-cogs"></i> TkinterTabMore</h3>
@@ -450,41 +460,41 @@
         </div>
         <!-- Minecraft Kibitect 项目 -->
         <div class="project-card">
-          <h3 class="project-title"><i class="fas fa-cube" style="animation: flyInIcon 0.8s ease-out forwards;"></i> Minecraft Kibitect</h3>
+          <h3 class="project-title"><i class="fas fa-cube"></i> Minecraft Kibitect</h3>
           <p><strong>简介</strong>：一个为《我的世界》玩家打造的桌面工具箱，已支持存档查看、坐标计算等核心功能。</p>
           <p><strong>未来计划</strong>：NBT编辑器、建筑生成器、资源计算器等。</p>
-          <p><strong>在2025/08/15 22:00将永久停止更新！</strong></p>
+          <p style="color: #e74c3c; font-weight: bold;"><strong>⚠️ 重要通知：本项目将在 2025/08/15 22:00 永久停止更新！</strong></p>
         </div>
       </div>
     </div>
   </section>
 
-    <!-- 成员 -->
-    <section id="team" class="section">
-      <div class="container">
-        <h2 class="section-title">我们的团队</h2>
-        <div class="member-list">
-          <div class="member">
-            <img src="https://youke1.picui.cn/s1/2025/08/15/689efd2396457.png" alt="地灯 dideng" class="member-avatar">
-            <div class="member-name">地灯 dideng</div>
-            <div class="member-role">开发者 / 创始人</div>
-            <p class="member-bio">热爱《我的世界》与Python开发，Minecraft Kibitect的创造者。</p>
-          </div>
-          <div class="member">
-            <img src="https://user-assets.sxlcdn.com/images/1261981/FltygE-dD0lPuOSgRkwrzFljWxHL.png?imageMogr2/strip/auto-orient/thumbnail/64x64>/format/png" alt="张涧" class="member-avatar">
-            <div class="member-name">张涧</div>
-            <div class="member-role">开发者</div>
-            <p class="member-bio">编程小白，正在努力学习中，对技术充满热情。</p>
-          </div>
-          <div class="member">
-           <img src="https://youke1.picui.cn/s1/2025/08/15/689efb0e22f7c.jpg" alt="MC-20018" class="member-avatar">
-            <div class="member-name">MC-20018</div>
-            <div class="member-role">资深开发者</div>
-            <p class="member-bio">拥有2年工作经验，精通Python、Java、Golang、C#。现任蔚蓝陪伴工作室主开发，FandMC工作室创始人，专注于Minecraft插件与服务端开发。</p>
-          </div>
+  <!-- 成员 -->
+  <section id="team" class="section">
+    <div class="container">
+      <h2 class="section-title">我们的团队</h2>
+      <div class="member-list">
+        <div class="member">
+          <img src="https://youke1.picui.cn/s1/2025/08/15/689efd2396457.png" alt="地灯 dideng" class="member-avatar">
+          <div class="member-name">地灯 dideng</div>
+          <div class="member-role">开发者 / 创始人</div>
+          <p class="member-bio">热爱《我的世界》与Python开发，Minecraft Kibitect的创造者。</p>
+        </div>
+        <div class="member">
+          <img src="https://user-assets.sxlcdn.com/images/1261981/FltygE-dD0lPuOSgRkwrzFljWxHL.png?imageMogr2/strip/auto-orient/thumbnail/64x64>/format/png" alt="张涧" class="member-avatar">
+          <div class="member-name">张涧</div>
+          <div class="member-role">开发者</div>
+          <p class="member-bio">编程小白，正在努力学习中，对技术充满热情。</p>
+        </div>
+        <div class="member">
+         <img src="https://youke1.picui.cn/s1/2025/08/15/689efb0e22f7c.jpg" alt="MC-20018" class="member-avatar">
+          <div class="member-name">MC-20018</div>
+          <div class="member-role">资深开发者</div>
+          <p class="member-bio">拥有2年工作经验，精通Python、Java、Golang、C#。现任蔚蓝陪伴工作室主开发，FandMC工作室创始人，专注于Minecraft插件与服务端开发。</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
   <!-- 开发日志 -->
   <section id="changelog" class="section">
@@ -530,7 +540,7 @@
     <p>© 2025 DGF Studio. 用代码连接世界。</p>
   </footer>
 
-<script>
+  <script>
     // 滚动监听 - 添加元素出现动画
     document.addEventListener('DOMContentLoaded', function () {
       // 滚动时更新导航栏样式
@@ -554,10 +564,7 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('appear');
-            // 关键：移除这一行，让动画可以重复触发
-            // observer.unobserve(entry.target);
           } else {
-            // 当元素离开视口时，移除动画类，以便下次进入时重新播放
             entry.target.classList.remove('appear');
           }
         });
