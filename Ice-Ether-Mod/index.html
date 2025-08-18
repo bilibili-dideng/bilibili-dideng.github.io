@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ice Ether Mod - DGF Studio</title>
+  <style>
+    :root {
+      --bg: #0a0c20;     /* 深紫黑 */
+      --float: #111430;  /* 浮动栏深紫 */
+      --card: #171a45;   /* 卡片深紫 */
+      --text: #e6e1ff;   /* 浅紫白 */
+      --text-muted: #a8a2d1; /* 灰紫 */
+      --accent: #a36cfa; /* 青紫色 (高亮色) */
+      --accent-light: #c4a3ff; /* 浅青紫 */
+      --border-color: #232654;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(163, 108, 250, 0.08) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(163, 108, 250, 0.05) 0%, transparent 20%);
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* 导航栏 */
+    header {
+      background: rgba(17, 20, 48, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      border-radius: 12px 12px 0 0;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(17, 20, 48, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      height: 60px;
+      width: auto;
+    }
+
+    .brand-name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .brand-name span {
+      color: var(--accent);
+    }
+
+    .nav-links a {
+      margin-left: 2rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* 英雄区域 */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, var(--bg), #1e1a5a);
+      color: var(--text);
+      border-radius: 16px;
+      margin-bottom: 3rem;
+      box-shadow: 0 10px 30px rgba(17, 20, 48, 0.5);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      margin-bottom: 1rem;
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      max-width: 800px;
+      margin: 1rem auto;
+      opacity: 0.9;
+    }
+
+    /* 按钮 */
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 5px 15px rgba(163, 108, 250, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(163, 108, 250, 0.5);
+    }
+
+    /* 功能区域 */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 5px 20px rgba(17, 20, 48, 0.3);
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(163, 108, 250, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .feature-title {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: var(--accent-light);
+      font-weight: 700;
+    }
+
+    /* 下载区域 */
+    .download-section {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--float);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(17, 20, 48, 0.5);
+      margin: 4rem 0;
+      border: 1px solid var(--border-color);
+    }
+
+    .download-section h2 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .download-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .download-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .download-links .btn-modrinth {
+      background: var(--accent);
+      color: white;
+    }
+
+    .download-links .btn-modrinth:hover {
+      background: #8a56d8;
+      transform: translateY(-2px);
+    }
+
+    .download-links .btn-github {
+      background: #2c3e50;
+      color: white;
+    }
+
+    .download-links .btn-github:hover {
+      background: #1a2530;
+      transform: translateY(-2px);
+    }
+
+    /* 页脚 */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <!-- Font Awesome 图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 导航栏 -->
+    <header>
+      <div class="navbar">
+        <div class="logo-container">
+          <img src="https://user-assets.sxlcdn.com/images/1261981/FisNGbpZOylvA4-3lgE0ejSYRnJq.png?imageMogr2/strip/auto-orient/thumbnail/1200x630>/format/png" alt="DGF Studio Logo" class="logo">
+          <div class="brand-name">DGF <span>Studio</span></div>
+        </div>
+        <div class="nav-links">
+          <a href="https://bilibili-dideng.github.io">主页</a>
+          <a href="https://github.com/bilibili-dideng">GitHub</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+      <h1>Ice Ether <span>Mod</span></h1>
+      <p>为《我的世界》注入寒冰与以太之力，探索全新的以太水晶与强大配方。</p>
+      <a href="#download" class="btn btn-primary">
+        <i class="fas fa-download"></i> 立即下载
+      </a>
+    </section>
+
+    <!-- 功能特性 -->
+    <section id="features">
+      <h2 style="text-align:center; font-size:2.5rem; color:var(--accent); margin-bottom:3rem;">核心内容</h2>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-gem"></i>
+          </div>
+          <h3 class="feature-title">以太水晶</h3>
+          <p>新增蓝/红以太水晶及其对应的水晶块。它们是制作高级防具和魔法物品的核心材料，蕴藏着强大的能量。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="feature-title">以太防具</h3>
+          <p>使用以太水晶打造全新的防具套装。它不仅提供卓越的防御力，还附带独特的抗性与增益效果。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-apple-alt"></i>
+          </div>
+          <h3 class="feature-title">强化食物与附魔</h3>
+          <p>引入“冰之以太苹果”作为强大的食物，以及“附魔金苹果”的新制作配方，为你的冒险提供终极支持。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 下载 -->
+    <section id="download" class="download-section">
+      <h2>下载 Ice Ether Mod</h2>
+      <p>当前版本: v1.0.0 | 支持游戏版本: 1.20.1-1.20.6 | Fabric</p>
+      <div class="download-links">
+        <a href="https://modrinth.com/mod/ice-ether-mod" class="btn-modrinth" target="_blank">
+          <i class="fas fa-cloud-download-alt"></i> 从 Modrinth 下载
+        </a>
+        <a href="https://github.com/bilibili-dideng/Ice-Ether-Mod/releases" class="btn-github" target="_blank">
+          <i class="fab fa-github"></i> 从 GitHub 获取
+        </a>
+      </div>
+      <p style="margin-top: 1rem;">
+        <small>开源免费 | 遵循 MIT 许可证</small>
+      </p>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+      <p>由 <a href="https://github.com/bilibili-dideng" target="_blank">地灯 dideng</a> 开发 | 《我的世界》是 Mojang Studios 的注册商标。本模组与 Mojang 无关联。</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
