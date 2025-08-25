@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcf02d14-9446-4ef0-914b-7f795ca7b336" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Ice-Ether-Mod/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CA-Library-IDE/image/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CA-Library-IDE/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dideng/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dideng/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +27,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;bilibili-dideng&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/bilibili-dideng/bilibili-dideng.github.io.git&quot;,
+    &quot;accountId&quot;: &quot;b253f670-eb89-43de-855f-501342279664&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -33,19 +47,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.qw.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Users/Administrator/My website/bilibili-dideng&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.qw.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/Users/Administrator/My website/bilibili-dideng/CA-Library-IDE/image"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Users\Administrator\My website\bilibili-dideng\CA-Library-IDE\image" />
       <recent name="D:\Users\Administrator\My website\Minecraft Kitbitect\Minecraft-Kibitect" />
     </key>
     <key name="MoveFile.RECENT_KEYS">

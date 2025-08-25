@@ -84,5 +84,43 @@
     "state": "died",
     "files": "Not",
     "died_time": "2025/08/15 22:00"
+  },
+  "Ice-Ether-Mod": {
+    "name": "Ice-Ether-Mod",
+    "state": "open",
+    "type": "MC-mod"
+  },
+  "CA-Library-IDE": {
+    "state": "Open",
+    "name": "CA Library IDE",
+    "member": [
+      "地灯dideng"
+    ],
+    "Promotion_slogan": "为CA拓展包而生",
+    "introduction": "CA Library IDE 是一款专为《我的世界》CA拓展包开发者设计的集成开发环境（IDE）。它提供行号显示、当前行高亮、主题切换、CA关键字快速插入、智能自动缩进、JSON结构化视图、文件树管理以及JSON格式化与校验等核心功能。通过独特的拓展包机制，开发者可以为IDE增加新的主题和CA关键字模板，实现功能的无限扩展，极大地提升开发效率和体验。",
+    "project": {
+      "Core": {
+        "introduction": "IDE核心功能模块，包括编辑器、语法高亮、文件系统管理。",
+        "state": "developing"
+      },
+      "Extension-Package": {
+        "introduction": "拓展包支持系统，允许社区开发并加载自定义主题和关键字库。",
+        "state": "planning"
+      }
+    },
+    "team": {
+      "dideng": {
+        "state": "全栈开发者 / 项目负责人",
+        "introduction": "负责CA Library IDE的整体架构、核心功能开发与维护。"
+      }
+    },
+    "contact": {
+      "introduction": "对CA Library IDE有任何建议或问题？欢迎联系我们！",
+      "information": {
+        "bilibili": "https://space.bilibili.com/1749090711",
+        "github": "https://github.com/bilibili-dideng",
+        "email": "mailto:3483434955@outlook.com"
+      }
+    }
   }
 }
