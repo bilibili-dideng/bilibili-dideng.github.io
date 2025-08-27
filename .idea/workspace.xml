@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcf02d14-9446-4ef0-914b-7f795ca7b336" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/blog/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/BasicGraphics_00012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/Circle_00041.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/c1_li.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/c1_ms2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/c1flare2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/c1rc-mid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/c1rc-midXXX.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/c1rc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/c1vign1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/image/tool_particle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/blog/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,12 +62,13 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Users/Administrator/My website/bilibili-dideng/CA-Library-IDE/docs/markdown&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Users/Administrator/My website/bilibili-dideng/blog/image&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Users\Administrator\My website\bilibili-dideng\blog\image" />
       <recent name="D:\Users\Administrator\My website\bilibili-dideng\CA-Library-IDE\docs\markdown" />
       <recent name="D:\Users\Administrator\My website\bilibili-dideng\CA-Library-IDE\image" />
       <recent name="D:\Users\Administrator\My website\Minecraft Kitbitect\Minecraft-Kibitect" />
