@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CA Library IDE文档</title>
+
+  <!-- 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+
+  <!-- Prism.js 主题 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet">
+
+  <style>
+    /* 全局重置 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 主背景：深邃黑蓝紫渐变 */
+    body {
+      background: linear-gradient(40deg, #0a0f25, #0d0a28, #12102a);
+      background-size: 300% 300%;
+      animation: gradientBG 15s ease infinite;
+      color: #c5d8ff;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 粒子系统 */
+    .particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .sidebar-header {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #7ea8ff;
+      margin-bottom: 28px;
+      cursor: pointer; /* 表示可交互 */
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-block; /* 必须是 inline-block 或 block 才能 transform */
+      position: relative;
+      /* 加一点发光 */
+      text-shadow: 0 0 8px rgba(100, 160, 255, 0.3);
+    }
+
+    /* 悬停时：上浮 + 轻微放大 */
+    .sidebar-header:hover {
+      transform: translateY(-6px) scale(1.03);
+      color: #a8d0ff;
+      text-shadow: 0 0 14px rgba(100, 180, 255, 0.5),
+                   0 0 20px rgba(80, 150, 240, 0.4);
+    }
+
+    /* 点击时更低一点 */
+    .sidebar-header:active {
+      transform: translateY(0) scale(1);
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: float 20s infinite linear;
+    }
+
+    .particle.small  { width: 1px; height: 1px; background: rgba(120, 180, 255, 0.4); }
+    .particle.medium { width: 2px; height: 2px; background: rgba(100, 150, 240, 0.5); }
+    .particle.large  { width: 3px; height: 3px; background: rgba(80, 130, 220, 0.6); }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-100vh) translateX(100vw); opacity: 0; }
+    }
+
+    /* 布局 */
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* ===== 右上角跳转按钮 ===== */
+    .goto-home-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: rgba(60, 110, 190, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(100, 160, 255, 0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7ea8ff;
+      font-size: 1.8em;
+      text-decoration: none;
+      z-index: 100;
+      font-family: 'Fira Code', monospace;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      /* 发光效果 */
+      text-shadow: 0 0 5px rgba(100, 180, 255, 0.4);
+      box-shadow:
+        0 0 5px rgba(80, 150, 240, 0.3),
+        inset 0 2px 5px rgba(255, 255, 255, 0.1);
+    }
+
+    /* 悬停效果：上浮 + 发光增强 + 微放大 */
+    .goto-home-btn:hover {
+      transform: translateY(-3px) scale(1.1);
+      background: rgba(80, 140, 220, 0.5);
+      color: #a8d0ff;
+      text-shadow: 0 0 10px rgba(100, 180, 255, 0.7);
+      box-shadow:
+        0 0 10px rgba(100, 180, 255, 0.5),
+        inset 0 2px 5px rgba(255, 255, 255, 0.2);
+    }
+
+    /* 点击效果 */
+    .goto-home-btn:active {
+      transform: translateY(0) scale(0.95);
+    }
+
+    /* 呼吸动画 */
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 5px rgba(80, 150, 240, 0.3); }
+      50% { box-shadow: 0 0 12px rgba(100, 180, 255, 0.5); }
+      100% { box-shadow: 0 0 5px rgba(80, 150, 240, 0.3); }
+    }
+
+    .goto-home-btn {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+      width: 280px;
+      background: rgba(12, 18, 36, 0.7);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(80, 130, 200, 0.2);
+      padding: 28px 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #7ea8ff;
+      margin-bottom: 28px;
+    }
+
+    .sidebar-group > .sidebar-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 13px;
+      font-weight: 600;
+      color: #8cbfff;
+      cursor: pointer;
+      border-radius: 9px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-group > .sidebar-label:hover {
+      background: rgba(100, 160, 255, 0.15);
+      color: #a8d0ff;
+    }
+
+    .sidebar-group > .sidebar-label .arrow {
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid #6caeff;
+      border-bottom: 2px solid #6caeff;
+      transform: rotate(45deg);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-group.open > .sidebar-label .arrow {
+      transform: rotate(-135deg);
+    }
+
+    .sidebar-group > ul {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      margin-top: 4px;
+    }
+
+    .sidebar-group.open > ul {
+      max-height: 800px;
+      padding-left: 10px;
+    }
+
+    .sidebar-group a {
+      display: block;
+      color: #a0b8e0;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 0.95em;
+      transition: all 0.2s;
+    }
+
+    .sidebar-group a:hover,
+    .sidebar-group a.active {
+      background: rgba(100, 160, 255, 0.2);
+      color: #b8dcff;
+    }
+
+    /* 主内容区 */
+    .main-content {
+      flex: 1;
+      padding: 40px 30px;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    /* 页面切换 */
+    .page {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .sidebar-group a {
+      display: block;
+      color: #a0b8e0;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 0.95em;
+      transition: all 0.2s ease;
+      background: transparent;
+    }
+
+    .sidebar-group a:hover {
+      color: #b8dcff;
+      background: rgba(100, 160, 255, 0.15);
+      transform: translateX(2px);
+    }
+
+    .sidebar-group a.active {
+      color: #7ea8ff;
+      background: rgba(100, 160, 255, 0.2);
+      font-weight: 600;
+      border-left: 3px solid #5d9cec;
+    }
+
+    h1, h2, h3, h4, h5 {
+      position: relative;
+      color: #7ecfff;
+      margin: 1.5em 0 0.8em;
+      font-family: 'Inter', sans-serif;
+      transition: text-shadow 0.3s ease;
+    }
+
+    @keyframes glowPulse {
+      0% { opacity: 0.9; }
+      50% { opacity: 1; }
+      100% { opacity: 0.9; }
+    }
+
+    h1 {
+      font-size: 1.8em;
+      font-weight: 600;
+      text-shadow:
+        0 0 8px rgba(100, 180, 255, 0.4),
+        0 0 15px rgba(80, 150, 240, 0.4),
+        0 0 20px rgba(60, 130, 220, 0.3);
+      animation: glowPulse 2.5s ease-in-out infinite alternate;
+      border-bottom: 1px solid rgba(100, 160, 240, 0.3);
+      padding-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      font-weight: 600;
+      text-shadow:
+        0 0 8px rgba(100, 180, 255, 0.4),
+        0 0 15px rgba(80, 150, 240, 0.4),
+        0 0 20px rgba(60, 130, 220, 0.3);
+      animation: glowPulse 2.5s ease-in-out infinite alternate;
+      border-bottom: 1px solid rgba(100, 160, 240, 0.3);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 1.5em;
+      font-weight: 600;
+      text-shadow:
+        0 0 6px rgba(100, 180, 255, 0.35),
+        0 0 12px rgba(80, 150, 240, 0.3),
+        0 0 16px rgba(60, 130, 220, 0.2);
+      animation: glowPulse 3s ease-in-out infinite alternate;
+    }
+
+    h4 {
+      font-size: 1.3em;
+      font-weight: 500;
+      text-shadow:
+        0 0 4px rgba(100, 180, 255, 0.3),
+        0 0 8px rgba(80, 150, 240, 0.25);
+    }
+
+    h5 {
+      font-size: 1.1em;
+      font-weight: 500;
+      text-shadow:
+        0 0 3px rgba(100, 180, 255, 0.25),
+        0 0 6px rgba(80, 150, 240, 0.2);
+    }
+
+    /* 索引页链接 */
+    #page-index a {
+      color: #a0d8ff;
+      text-decoration: none;
+      padding: 6px 0;
+      display: block;
+      transition: all 0.2s ease;
+      border-radius: 6px;
+      padding-left: 4px;
+    }
+
+    #page-index a:hover {
+      color: #c5e8ff;
+      background: rgba(100, 160, 255, 0.1);
+      transform: scale(1.02);
+    }
+
+    #page-index a:active {
+      transform: scale(1);
+    }
+
+    /* 去掉所有默认下划线和蓝色 */
+    a {
+      text-decoration: none;
+      outline: none;
+    }
+
+    a:active,
+    a:focus {
+      outline: none;
+    }
+
+    h1, h2 {
+      color: #7ecfff;
+      margin: 1.5em 0 0.8em;
+    }
+
+    p, li {
+      color: #b8d0ff;
+      margin-bottom: 1em;
+    }
+
+    /* 单行代码 */
+    code {
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 0.95em;
+      background: rgba(10, 20, 40, 0.3);
+      color: #a0d8ff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(100, 150, 255, 0.2);
+    }
+
+    /* 多行代码块 */
+    pre {
+      margin: 20px 0;
+      border-radius: 10px;
+      background: rgba(10, 20, 40, 0.4);
+      border: 1px solid rgba(100, 150, 255, 0.15);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: auto;
+    }
+
+    pre code {
+      background: none;
+      padding: 20px;
+      display: block;
+      line-height: 1.5;
+      border: none;
+    }
+
+    pre::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(100, 180, 255, 0.6), transparent);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: scaleX(0); transform-origin: left; }
+      50% { transform: scaleX(1); }
+      100% { transform: scaleX(0); transform-origin: right; }
+    }
+
+    /* 表格 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(30, 50, 90, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(100, 150, 255, 0.15);
+    }
+
+    th {
+      background: rgba(60, 110, 190, 0.25);
+      color: #8cc5ff;
+    }
+
+    tr:hover {
+      background: rgba(100, 160, 255, 0.1);
+    }
+
+    /* 滚动条 */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(100, 160, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 160, 255, 0.4);
+    }
+
+    @supports (-moz-appearance: none) {
+      .main-content, .sidebar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(100, 160, 255, 0.3) transparent;
+      }
+    }
+
+    /* 提示框 */
+    .alert {
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .alert-info {
+      border-left: 5px solid #5d9cec;
+      background: rgba(50, 110, 180, 0.1);
+      color: #a3c8ff;
+    }
+
+    .alert-warning {
+      border-left: 5px solid #ff9800;
+      background: rgba(200, 100, 50, 0.1);
+      color: #ffc166;
+    }
+
+    .alert svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .alert-info svg {
+      fill: #5d9cec;
+    }
+
+    .alert-warning svg {
+      fill: #ff9800;
+    }
+
+    /* 交互式小测验 */
+    .quiz-item {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: rgba(30, 50, 90, 0.1);
+      border-radius: 10px;
+      border: 1px solid rgba(100, 150, 255, 0.15);
+    }
+
+    .quiz-item p {
+      margin-bottom: 12px;
+      color: #c5d8ff;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .options button {
+      background: rgba(100, 160, 255, 0.2);
+      color: #a0d8ff;
+      border: 1px solid rgba(100, 160, 255, 0.3);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.2s;
+    }
+
+    .options button:hover {
+      background: rgba(100, 160, 255, 0.3);
+    }
+
+    .feedback {
+      margin-top: 8px;
+      font-size: 0.95em;
+      font-weight: 500;
+    }
+
+    .feedback.correct {
+      color: #66bb6a;
+    }
+
+    .feedback.wrong {
+      color: #ef5350;
+    }
+
+    #show-answer-btn {
+      background: #5d9cec;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    #show-answer-btn:hover {
+      background: #4a89dc;
+    }
+
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; max-height: 0; }
+      .sidebar.active { max-height: 500px; }
+      .toggle-btn { display: block; }
+    }
+
+    .toggle-btn {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 粒子背景 -->
+  <div class="particles" id="particles"></div>
+
+  <!-- 移动端菜单按钮 -->
+  <div class="toggle-btn" id="toggleBtn">☰ 目录</div>
+
+    <!-- 右上角跳转按钮 -->
+  <a href="../index.html" class="goto-home-btn" title="返回首页">
+    >
+  </a>
+
+  <!-- 布局 -->
+  <div class="container">
+    <!-- 侧边栏 -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">CA Library IDE文档</div>
+      <ul class="sidebar-nav">
+          <li class="sidebar-group open">
+          <div class="sidebar-label">
+            索引
+            <span class="arrow"></span>
+          </div>
+          <ul>
+            <li><a href="#" data-page="index">返回首页（索引）</a></li>
+          </ul>
+        </li>
+        <!-- JSON基础篇 -->
+        <li class="sidebar-group open">
+          <div class="sidebar-label">
+            JSON基础篇
+            <span class="arrow"></span>
+          </div>
+          <ul>
+            <li><a href="#" data-page="what-is-json">1. 什么是JSON？</a></li>
+            <li><a href="#" data-page="basic-types">2. 基础数据类型</a></li>
+            <li><a href="#" data-page="key-value">3. 键值对</a></li>
+            <li><a href="#" data-page="basic-grammar">4. 基础语法</a></li>
+            <li><a href="#" data-page="list-and-object">5. 列表和对象</a></li>
+            <li><a href="#" data-page="null-type">6. 空数据类型</a></li>
+            <li><a href="#" data-page="final-json">7. 最终篇</a></li>
+          </ul>
+        </li>
+
+        <!-- 扩展包开发 -->
+        <li class="sidebar-group open">
+          <div class="sidebar-label">
+            扩展包开发
+            <span class="arrow"></span>
+          </div>
+          <ul>
+            <li><a href="#" data-page="what-is-library">1. 什么是扩展包？</a></li>
+            <li><a href="#" data-page="library-info">2. 扩展包信息</a></li>
+            <li><a href="#" data-page="add-theme">3. 添加主题</a></li>
+            <li><a href="#" data-page="add-ca-keyword">4. 添加CA关键词</a></li>
+            <li><a href="#" data-page="final-lib">5. 最终篇</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <div id="page-index" class="page active">
+          <h1>文档索引</h1>
+          <div style="margin-top: 40px; padding: 20px; background: rgba(60, 110, 190, 0.1); border-radius: 10px; color: #a0d8ff;">
+            <p>提示：本文档内容是根据代码和默认扩展包写的！</p>
+          </div>
+
+          <p>点击下方章节快速跳转：</p>
+
+          <div style="margin: 30px 0;">
+            <h2>JSON基础篇</h2>
+            <ul>
+              <li><a href="#" data-page="what-is-json" onclick="event.preventDefault(); showPage('what-is-json');">1. 什么是JSON？</a></li>
+              <li><a href="#" data-page="basic-types" onclick="event.preventDefault(); showPage('basic-types');">2. 基础数据类型</a></li>
+              <li><a href="#" data-page="key-value" onclick="event.preventDefault(); showPage('key-value');">3. 键值对</a></li>
+              <li><a href="#" data-page="basic-grammar" onclick="event.preventDefault(); showPage('basic-grammar');">4. 基础语法</a></li>
+              <li><a href="#" data-page="list-and-object" onclick="event.preventDefault(); showPage('list-and-object');">5. 列表和对象</a></li>
+              <li><a href="#" data-page="null-type" onclick="event.preventDefault(); showPage('null-type');">6. 空数据类型</a></li>
+              <li><a href="#" data-page="final-json" onclick="event.preventDefault(); showPage('final-json');">7. 最终篇</a></li>
+            </ul>
+          </div>
+
+          <div style="margin: 30px 0;">
+            <h2>扩展包开发</h2>
+            <ul>
+              <li><a href="#" data-page="what-is-library" onclick="event.preventDefault(); showPage('what-is-library');">1. 什么是扩展包？</a></li>
+              <li><a href="#" data-page="library-info" onclick="event.preventDefault(); showPage('library-info');">2. 扩展包信息</a></li>
+              <li><a href="#" data-page="add-theme" onclick="event.preventDefault(); showPage('add-theme');">3. 添加主题</a></li>
+              <li><a href="#" data-page="add-ca-keyword" onclick="event.preventDefault(); showPage('add-ca-keyword');">4. 添加CA关键词</a></li>
+              <li><a href="#" data-page="final-lib" onclick="event.preventDefault(); showPage('final-lib');">5. 最终篇</a></li>
+            </ul>
+          </div>
+        </div>
+      <div id="page-what-is-json" class="page">
+        <h1>1. 什么是JSON？</h1>
+        <p>JSON（JavaScript Object Notation）是一种轻量级的数据交换格式，它基于ECMAScript的一个子集。它采用了类似于JavaScript的语法，但是比它更小、更快，更易于人阅读和编写。</p>
+        <p>JSON是一种基于文本的轻量级数据交换格式。</p>
+        <h2>它简单吗？</h2>
+        <p>是的，它非常简单！只需稍微了解一下数据类型和语法就可以轻松上手。</p>
+        <h2>为什么要使用JSON？</h2>
+        <p>JSON有很多优点，比如：</p>
+        <ul>
+          <li><strong>轻量级</strong>：JSON占用的空间比XML小很多，所以在传输数据时更加高效。</li>
+          <li>在开发命令助手的拓展包时，我们就要用到JSON。</li>
+        </ul>
+        <div class="alert alert-info">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          <div>如果你已经会使用JSON，可以直接跳过本教程！</div>
+        </div>
+      </div>
+
+      <div id="page-basic-types" class="page">
+        <h1>2. 基础数据类型</h1>
+        <p>以下是 JSON 的基础数据类型：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>数据类型</th>
+              <th>描述</th>
+              <th>示例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>字符串</td>
+              <td>字符串类型，用双引号括起来的任意文本。</td>
+              <td><code>"hello, world"</code></td>
+            </tr>
+            <tr>
+              <td>数值</td>
+              <td>数值类型，可以是整数或浮点数。</td>
+              <td><code>42</code>, <code>3.14159</code></td>
+            </tr>
+            <tr>
+              <td>布尔值</td>
+              <td>布尔类型，只有两个值：true 和 false。</td>
+              <td><code>true</code>, <code>false</code></td>
+            </tr>
+            <tr>
+              <td>数组</td>
+              <td>数组类型，用方括号括起来的一组值，值之间用逗号分隔。</td>
+              <td><code>[1, 2, 3]</code>, <code>["apple", "banana"]</code></td>
+            </tr>
+            <tr>
+              <td>对象</td>
+              <td>对象类型，用花括号括起来的一组键-值对，键和值之间用冒号分隔。</td>
+              <td><code>{"name": "John", "age": 30}</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>小测验：识别数据类型</h2>
+        <p>点击下方按钮，选择每个值对应的数据类型：</p>
+
+        <div class="quiz-container">
+          <div class="quiz-item">
+            <p><strong>1.</strong> <code>"Hello"</code></p>
+            <div class="options">
+              <button onclick="checkAnswer(1, 'string')">字符串</button>
+              <button onclick="checkAnswer(1, 'number')">数值</button>
+              <button onclick="checkAnswer(1, 'boolean')">布尔值</button>
+              <button onclick="checkAnswer(1, 'array')">数组</button>
+              <button onclick="checkAnswer(1, 'object')">对象</button>
+            </div>
+            <div id="feedback-1" class="feedback"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p><strong>2.</strong> <code>42</code></p>
+            <div class="options">
+              <button onclick="checkAnswer(2, 'string')">字符串</button>
+              <button onclick="checkAnswer(2, 'number')">数值</button>
+              <button onclick="checkAnswer(2, 'boolean')">布尔值</button>
+              <button onclick="checkAnswer(2, 'array')">数组</button>
+              <button onclick="checkAnswer(2, 'object')">对象</button>
+            </div>
+            <div id="feedback-2" class="feedback"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p><strong>3.</strong> <code>true</code></p>
+            <div class="options">
+              <button onclick="checkAnswer(3, 'string')">字符串</button>
+              <button onclick="checkAnswer(3, 'number')">数值</button>
+              <button onclick="checkAnswer(3, 'boolean')">布尔值</button>
+              <button onclick="checkAnswer(3, 'array')">数组</button>
+              <button onclick="checkAnswer(3, 'object')">对象</button>
+            </div>
+            <div id="feedback-3" class="feedback"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p><strong>4.</strong> <code>[1, 2, 3]</code></p>
+            <div class="options">
+              <button onclick="checkAnswer(4, 'string')">字符串</button>
+              <button onclick="checkAnswer(4, 'number')">数值</button>
+              <button onclick="checkAnswer(4, 'boolean')">布尔值</button>
+              <button onclick="checkAnswer(4, 'array')">数组</button>
+              <button onclick="checkAnswer(4, 'object')">对象</button>
+            </div>
+            <div id="feedback-4" class="feedback"></div>
+          </div>
+
+          <div class="quiz-item">
+            <p><strong>5.</strong> <code>{"name": "John", "age": 30}</code></p>
+            <div class="options">
+              <button onclick="checkAnswer(5, 'string')">字符串</button>
+              <button onclick="checkAnswer(5, 'number')">数值</button>
+              <button onclick="checkAnswer(5, 'boolean')">布尔值</button>
+              <button onclick="checkAnswer(5, 'array')">数组</button>
+              <button onclick="checkAnswer(5, 'object')">对象</button>
+            </div>
+            <div id="feedback-5" class="feedback"></div>
+          </div>
+        </div>
+
+        <div style="margin: 20px 0;">
+          <button id="show-answer-btn" onclick="showCorrectAnswers()">显示正确答案</button>
+        </div>
+      </div>
+
+      <div id="page-key-value" class="page">
+        <h1>3. 键值对</h1>
+        <p>键值对是一种数据结构，它将一个键和一个值关联起来。在 JSON 中，键值对通常用冒号分隔，键和值用双引号括起来。</p>
+        <pre><code class="language-json">"Key": "Value"</code></pre>
+        <p>其中，键是 <code>"Key"</code>，值是 <code>"Value"</code>。</p>
+        <p>键值对可以嵌套，形成更复杂的数据结构。</p>
+        <p>这个值（Value）可以是任何数据类型，包括：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>数据类型</th>
+              <th>描述</th>
+              <th>示例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>字符串</td>
+              <td>字符串类型，用双引号括起来的任意文本。</td>
+              <td><code>"hello, world"</code></td>
+            </tr>
+            <tr>
+              <td>数值</td>
+              <td>数值类型，可以是整数或浮点数。</td>
+              <td><code>42</code>, <code>3.14159</code></td>
+            </tr>
+            <tr>
+              <td>布尔值</td>
+              <td>布尔类型，只有两个值：true 和 false。</td>
+              <td><code>true</code>, <code>false</code></td>
+            </tr>
+            <tr>
+              <td>数组</td>
+              <td>数组类型，用方括号括起来的一组值，值之间用逗号分隔。</td>
+              <td><code>[1, 2, 3]</code>, <code>["apple", "banana", "orange"]</code></td>
+            </tr>
+            <tr>
+              <td>对象</td>
+              <td>对象类型，用花括号括起来的一组键-值对，键和值之间用冒号分隔。</td>
+              <td><code>{"name": "John", "age": 30}</code>, <code>{"name": "Mary", "age": 25}</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>这下你应该明白了吧？</p>
+        <p>不妨试着写一个键值对吧！</p>
+      </div>
+
+      <div id="page-basic-grammar" class="page">
+        <h1>4. 基础语法</h1>
+        <p>首先，我们要写一个大括号 <code>{}</code>，然后在里面写一些键值对。键值对之间用逗号隔开，键和值之间用冒号 <code>:</code> 隔开。</p>
+        <pre><code class="language-json">{
+  "name": "Mark"
+}</code></pre>
+        <p>如果要写多个键值对，用逗号隔开即可：</p>
+        <pre><code class="language-json">{
+  "name": "Mark",
+  "age": 25,
+  "city": "Beijing"
+}</code></pre>
+        <div class="alert alert-warning">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+          </svg>
+          <div>
+            <strong>警告：</strong>最后一个键值对后面不能有逗号，否则会报错。<br>
+            JSON 不支持注释（除了 JSON5）。
+          </div>
+        </div>
+        <p>现在，不妨试着写一个吧！</p>
+      </div>
+
+      <div id="page-list-and-object" class="page">
+        <h1>5. 列表和对象</h1>
+        <h2>列表</h2>
+        <p>列表是一种有序集合，可以存储多个值。列表可以包含任意类型的值，包括数字、字符串、布尔值、列表、对象等。</p>
+        <pre><code class="language-json">{
+    "name": ["John", "Jane", "Bob"]
+}</code></pre>
+        <p>我们可以看到里面使用逗号分隔，用方括号括起来，表示这是一个列表。</p>
+        <p>列表也可以放其他数据类型，例如：</p>
+        <pre><code class="language-json">{
+    "a": [
+        "apple",
+        123
+    ]
+}</code></pre>
+        <h2>对象</h2>
+        <p>对象是一种无序的集合，可以存储多个键值对。键值对的形式为 <code>"key": value</code>，键必须是字符串，值可以是任意类型。</p>
+        <pre><code class="language-json">{
+    "person": {
+        "name": "John",
+        "age": 30,
+        "city": "New York"
+    }
+}</code></pre>
+        <p>我们可以看到里面使用花括号括起来，表示这是一个对象，键值对之间使用逗号分隔。</p>
+        <p>是不是和外面的对象很像？</p>
+        <p>现在，不妨你也写一个？</p>
+      </div>
+
+      <div id="page-null-type" class="page">
+        <h1>6. 空数据类型</h1>
+        <p>空数据类型是指没有具体的值。</p>
+        <p>很简单，空数据类型只有一个值，就是 <code>null</code>。</p>
+        <p><code>null</code> 是一个特殊的关键字，表示空数据类型。</p>
+        <p><code>null</code> 是一个字面量，可以直接赋值给变量，也可以作为函数的参数。</p>
+        <pre><code class="language-json">{
+  "item": null
+}</code></pre>
+        <p>你学会了吗？不妨实践一下吧！</p>
+      </div>
+
+      <div id="page-final-json" class="page">
+        <h1>7. 最终篇</h1>
+        <div style="text-align: center; padding: 40px 0; font-size: 1.4em; color: #a0d8ff;">
+          <p>恭喜你！</p>
+          <p>你已经完成了 <strong>JSON基础篇</strong> 的学习！</p>
+          <br>
+          <p>现在你可以去开发指令助手的拓展包了，祝你好运！</p>
+          <p style="margin-top: 20px; color: #889; font-size: 0.9em;">本教程 by 地灯dideng</p>
+        </div>
+      </div>
+
+      <!-- ========== 扩展包开发 ========== -->
+
+      <div id="page-what-is-library" class="page">
+        <h1>1. 什么是扩展包？</h1>
+        <h2>介绍</h2>
+        <p>CA Library IDE 扩展包可以让你添加以下功能：</p>
+        <ul>
+          <li>加入CA关键词</li>
+          <li>加入更多主题</li>
+        </ul>
+        <h2>简单吗？</h2>
+        <p>是的，CA Library IDE 扩展包非常简单。</p>
+        <p>那就让我们开始吧！</p>
+      </div>
+
+      <div id="page-library-info" class="page">
+        <h1>2. 扩展包信息</h1>
+        <p>我们需要先配置一下基本信息：</p>
+        <ul>
+          <li><strong>name</strong> - 示例: <code>"name": "example-library"</code></li>
+          <li><strong>description</strong> - 示例: <code>"description": "This is an example library for testing purposes."</code></li>
+          <li><strong>author</strong> - 示例: <code>"author": "Example Author"</code></li>
+          <li><strong>uuid</strong> - 示例: <code>"uuid": "12345678-1234-123456789012"</code></li>
+          <li><strong>version</strong> - 示例: <code>"version": "1.0.0"</code></li>
+        </ul>
+        <p>完整示例：</p>
+        <pre><code class="language-json">{
+  "name": "example-library",
+  "description": "This is an example library for testing purposes.",
+  "author": "Example Author",
+  "uuid": "12345678-1234-123456789012",
+  "version": "1.0.0"
+}</code></pre>
+        <div class="alert alert-warning">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+          </svg>
+          <div>
+            <strong>警告：</strong>请不要把 version 写成 <code>[1,0,0]</code> 之类的！
+          </div>
+        </div>
+      </div>
+
+      <div id="page-add-theme" class="page">
+        <h1>3. 添加主题</h1>
+        <h2>什么是主题？</h2>
+        <p>主题就是我们使用 IDE 时 UI 的配色。</p>
+        <h2>如何添加主题？</h2>
+        <p>很简单，示例：</p>
+        <pre><code class="language-json">{
+  "name": "example-library",
+  "description": "This is an example library for testing purposes.",
+  "author": "Example Author",
+  "uuid": "12345678-1234-123456789012",
+  "version": "1.0.0",
+  "theme": {
+    "you_theme_name": {
+      "primary_bg": "#2b2b2b",
+      "secondary_bg": "#3c3f41",
+      "accent": "#4b6eaf",
+      "text": "#ffffff",
+      "text_dim": "#cccccc",
+      "border": "#555555",
+      "item_hover": "#383838",
+      "item_selected": "#4b6eaf",
+      "string": "#a31515",
+      "keyword": "#0000ff",
+      "number": "#09885a",
+      "key": "#116644",
+      "brace": "#7F0055",
+      "editor_bg": "#2b2b2b",
+      "editor_text": "#dcdcdc"
+    }
+  }
+}</code></pre>
+        <p>在 <code>theme</code> 字段中，添加一个键值对，键为你想要的主题名称，值为一个对象，包含以下属性：</p>
+        <ul>
+          <li><code>primary_bg</code>：主要背景色</li>
+          <li><code>secondary_bg</code>：次要背景色</li>
+          <li><code>accent</code>：强调色</li>
+          <li><code>text</code>：文本色</li>
+          <li><code>text_dim</code>：文本暗色</li>
+          <li><code>border</code>：边框色</li>
+          <li><code>item_hover</code>：鼠标悬停时项目背景色</li>
+          <li><code>item_selected</code>：选中项目背景色</li>
+          <li><code>string</code>：字符串颜色</li>
+          <li><code>keyword</code>：关键字颜色</li>
+          <li><code>number</code>：数字颜色</li>
+          <li><code>key</code>：键颜色</li>
+          <li><code>brace</code>：括号颜色</li>
+          <li><code>editor_bg</code>：编辑器背景色</li>
+          <li><code>editor_text</code>：编辑器文本色</li>
+        </ul>
+        <p>这样，你就添加了一个新的主题了！</p>
+        <div class="alert alert-warning">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+          </svg>
+          <div>
+            <strong>警告！</strong>请不要漏写任何属性，否则可能会导致 IDE 配色异常！
+          </div>
+        </div>
+      </div>
+
+      <div id="page-add-ca-keyword" class="page">
+        <h1>4. 添加CA关键词</h1>
+        <h2>什么是CA关键词？</h2>
+        <p>CA关键词就是 CA 扩展包的例如：<code>name</code>, <code>enmus</code>, <code>idlist</code>, <code>commands</code>。在打开 CA 关键词树的时候就会有。</p>
+        <h2>如何添加CA关键词？</h2>
+        <p>也非常简单，示例：</p>
+        <pre><code class="language-json5">{
+  "name": "example-library",
+  "description": "This is an example library for testing purposes.",
+  "author": "Example Author",
+  "uuid": "12345678-1234-123456789012",
+  "version": "1.0.0",
+  "ca_key": {
+    "1": {
+      "you_ca_keyword_name": {
+        "name": "you_ca_keyword_name"
+      },
+      "you_ca_keyword_name-2": {
+        "name": "you_ca_keyword_name-2"
+      }
+    },
+    "2": {
+      "you_ca_keyword_name-3": {
+        "name": "you_ca_keyword_name-3"
+      }
+    }
+  }
+}</code></pre>
+        <p>我们在 <code>ca_key</code> 下添加了一个 <code>1</code> 和 <code>2</code> 的键值对，还有 3, 4，他们分别对应：</p>
+        <ul>
+          <li><strong>1</strong>: "CA关键词"</li>
+          <li><strong>2</strong>: "参数类型"</li>
+          <li><strong>3</strong>: "命令属性"</li>
+          <li><strong>4</strong>: "参数属性"</li>
+        </ul>
+        <p>里面的键值对就是我们要添加的 CA 关键词，格式是：</p>
+        <pre><code class="language-json5">{
+  "you_ca_keyword_name": {
+    "name": "you_ca_keyword_name"
+  }
+}</code></pre>
+        <p>其中 <code>name</code> 就是我们要添加的 CA 关键词的名称，这个名称会显示在 CA 扩展包的树中。</p>
+      </div>
+
+      <div id="page-final-lib" class="page">
+        <h1>5. 最终篇</h1>
+        <div style="text-align: center; padding: 40px 0; font-size: 1.4em; color: #a0d8ff;">
+          <p>你能看到这里，说明你已经学会如何写 CA Library 的扩展包了！</p>
+          <br>
+          <p>现在，你可以自己动手写一写了！</p>
+          <p>祝你好运！</p>
+          <p style="margin-top: 20px; color: #889; font-size: 0.9em;">本教程 by 地灯dideng</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<script>
+  // ===== 粒子背景 =====
+  const particlesBg = document.getElementById('particles');
+  const types = ['small', 'medium', 'large'];
+  const colors = ['rgba(120, 180, 255, 0.3)', 'rgba(100, 150, 240, 0.5)', 'rgba(80, 130, 220, 0.6)'];
+  for (let i = 0; i < 150; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    p.classList.add(types[Math.floor(Math.random() * 3)]);
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.top = Math.random() * 100 + 'vh';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.opacity = Math.random() * 0.4 + 0.2;
+    p.style.animationDuration = Math.random() * 20 + 10 + 's';
+    p.style.animationDelay = Math.random() * 5 + 's';
+    particlesBg.appendChild(p);
+  }
+
+  // ===== 小测验逻辑 =====
+  const correctAnswers = { 1: 'string', 2: 'number', 3: 'boolean', 4: 'array', 5: 'object' };
+  function checkAnswer(q, ans) {
+    const fb = document.getElementById(`feedback-${q}`);
+    if (ans === correctAnswers[q]) {
+      fb.innerHTML = `正确！这是 ${q === 1 ? '字符串' : q === 2 ? '数值' : q === 3 ? '布尔值' : q === 4 ? '数组' : '对象'}。`;
+      fb.className = 'feedback correct';
+    } else {
+      fb.innerHTML = '错误，请再想想！';
+      fb.className = 'feedback wrong';
+    }
+  }
+
+  function showCorrectAnswers() {
+    const answers = ['字符串', '数值', '布尔值', '数组', '对象'];
+    for (let i = 1; i <= 5; i++) {
+      const fb = document.getElementById(`feedback-${i}`);
+      fb.innerHTML = `正确答案：${answers[i-1]}`;
+      fb.className = 'feedback correct';
+    }
+    document.getElementById('show-answer-btn').disabled = true;
+    document.getElementById('show-answer-btn').style.opacity = '0.6';
+  }
+
+  // ===== 页面切换逻辑 =====
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+
+    document.querySelectorAll('.sidebar-group a').forEach(a => a.classList.remove('active'));
+    const activeLink = document.querySelector(`.sidebar-group a[data-page="${id}"]`);
+    if (activeLink) activeLink.classList.add('active');
+  }
+
+  // 初始化默认页面
+  document.addEventListener('DOMContentLoaded', () => {
+    // 绑定侧边栏点击事件
+    document.querySelectorAll('.sidebar-group a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        showPage(e.target.getAttribute('data-page'));
+      });
+    });
+
+    // 侧边栏分组展开/收起
+    document.querySelectorAll('.sidebar-label').forEach(label => {
+      label.addEventListener('click', () => {
+        label.parentElement.classList.toggle('open');
+      });
+    });
+
+    // 移动端菜单切换
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    if (toggleBtn && sidebar) {
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+    }
+  });
+</script>
+
+  <!-- Prism.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+</body>
+</html>

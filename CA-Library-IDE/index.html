@@ -281,10 +281,22 @@
       align-items: center;
       border: 1px solid var(--border);
       min-height: 350px;
-      cursor: zoom-in; /* 添加手型光标 */
+      cursor: zoom-in;
     }
 
-    /* --- 新增的模态框样式 --- */
+    /* --- 滚动动画：淡入淡出 --- */
+    .fade-element {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-element.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- 模态框样式 --- */
     .modal {
       display: none;
       position: fixed;
@@ -384,68 +396,69 @@
   </style>
 </head>
 <body>
-    <header>
-      <div class="logo">
-        <div class="brand-name">CA Library IDE</div>
-      </div>
-      <nav class="nav-links">
-        <a href="#features">功能</a>
-        <a href="#about">关于</a>
-        <a href="https://github.com" target="_blank">GitHub(暂不开源！)</a>
-      </nav>
-    </header>
+  <header>
+    <div class="logo">
+      <div class="brand-name">CA Library IDE</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#features">功能</a>
+      <a href="#about">关于</a>
+      <a href="./docs/index.html">文档</a>
+      <a href="https://github.com" target="_blank">GitHub(暂不开源！)</a>
+    </nav>
+  </header>
 
   <section class="hero">
-    <h1>为 <span>CA 拓展包</span> 而生</h1>
-    <p class="subtitle">专为 CA 拓展包开发者打造的集成开发环境。支持行号、主题、关键字插入、自动缩进等核心功能，提升开发效率。</p>
-    <div class="highlight">
+    <h1 class="fade-element">为 <span>CA 拓展包</span> 而生</h1>
+    <p class="subtitle fade-element">专为 CA 拓展包开发者打造的集成开发环境。支持行号、主题、关键字插入、自动缩进等核心功能，提升开发效率。</p>
+    <div class="highlight fade-element">
       > 当前为测试阶段，暂不开放源码。
     </div>
-    <div class="cta-buttons">
+    <div class="cta-buttons fade-element">
       <a href="https://wj.qq.com/s2/23601027/b7e0/" class="btn btn-primary">参加测试</a>
       <a href="#features" class="btn btn-secondary">了解更多</a>
     </div>
   </section>
 
   <section class="features" id="features">
-    <h2 class="section-title">核心功能</h2>
+    <h2 class="section-title fade-element">核心功能</h2>
     <div class="features-grid">
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">📝</div>
         <h3 class="feature-title">行号与当前行高亮</h3>
         <p>清晰显示每一行代码，当前行自动高亮，便于定位与调试。</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">🎨</div>
         <h3 class="feature-title">主题系统</h3>
         <p>支持通过拓展包加载自定义主题，适配不同视觉偏好。</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">⚡</div>
         <h3 class="feature-title">CA 关键字快速插入</h3>
         <p>一键插入常用 CA 命令与语法结构，减少手动输入错误。</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">⇥</div>
         <h3 class="feature-title">智能自动缩进</h3>
         <p>根据代码结构自动缩进，保持代码整洁规范。</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">📊</div>
         <h3 class="feature-title">结构化视图</h3>
         <p>左侧显示 JSON/脚本结构树，快速跳转到目标节点。</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">📁</div>
         <h3 class="feature-title">文件树管理</h3>
         <p>多文件项目支持，可视化文件目录，方便管理拓展包资源。</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">🔧</div>
         <h3 class="feature-title">JSON 格式化与校验</h3>
         <p>自动格式化 JSON，语法错误实时提示，确保数据正确。</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-element">
         <div class="feature-icon">🧩</div>
         <h3 class="feature-title">拓展包扩展功能</h3>
         <p>通过拓展包可增加新主题、新关键字模板，实现无限扩展。</p>
@@ -456,65 +469,85 @@
   <section class="about" id="about">
     <div class="about-content">
       <div class="about-text">
-        <h2>关于 CA Library IDE</h2>
-        <p>本项目专为 <strong>CA 拓展包</strong> 开发者设计，旨在解决原生编辑器功能不足的问题。</p>
-        <p>我们支持完整的 CA 语法体系，并通过插件化架构，允许社区开发 <strong>主题包</strong> 与 <strong>关键字模板包</strong>，持续扩展 IDE 能力。</p>
-        <p>目前项目处于内测阶段，暂不开放源码，但我们欢迎开发者申请试用并提供反馈。</p>
+        <h2 class="fade-element">关于 CA Library IDE</h2>
+        <p class="fade-element">本项目专为 <strong>CA 拓展包</strong> 开发者设计，旨在解决原生编辑器功能不足的问题。</p>
+        <p class="fade-element">我们支持完整的 CA 语法体系，并通过插件化架构，允许社区开发 <strong>主题包</strong> 与 <strong>关键字模板包</strong>，持续扩展 IDE 能力。</p>
+        <p class="fade-element">目前项目处于内测阶段，暂不开放源码，但我们欢迎开发者申请试用并提供反馈。</p>
         <div class="cta-buttons" style="justify-content: flex-start; margin-top: 2.5rem;">
-          <a href="mailto:DGF-Studio@outlook.com" class="btn btn-secondary">联系我们</a>
-          <a href="#features" class="btn btn-primary">查看功能</a>
+          <a href="mailto:DGF-Studio@outlook.com" class="btn btn-secondary fade-element">联系我们</a>
+          <a href="#features" class="btn btn-primary fade-element">查看功能</a>
         </div>
       </div>
 
-      <div class="about-image" onclick="openModal('./image/1.png')">
+      <div class="about-image fade-element" onclick="openModal('./image/1.png')">
         <img src="./image/1.png" alt="IDE 预览" style="border-radius: 12px; width: 150%; height: 190px;">
       </div>
     </div>
   </section>
 
+  <!-- 模态框 -->
   <div id="imageModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImage">
   </div>
 
   <footer>
-    <p>© 2025 地灯dideng | 专为 <strong>CA 拓展包</strong> 打造 | 内测中</p>
-    <p>联系邮箱: <a href="mailto:DGF-Studio@outlook.com">DGF-Studio@outlook.com</a></p>
+    <p class="fade-element">© 2025 地灯dideng | 专为 <strong>CA 拓展包</strong> 打造 | 内测中</p>
+    <p class="fade-element">联系邮箱: <a href="mailto:DGF-Studio@outlook.com">DGF-Studio@outlook.com</a></p>
   </footer>
 
   <script>
-    // 获取模态框元素
+    // ===== 图片模态框功能 =====
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImage");
     const closeBtn = document.querySelector(".close");
 
-    // 打开模态框的函数
     function openModal(imageSrc) {
-      modal.style.display = "flex"; // 使用 flex 居中
+      modal.style.display = "flex";
       modal.classList.add("show");
       modalImg.src = imageSrc;
     }
 
-    // 关闭模态框的函数
     function closeModal() {
       modal.classList.remove("show");
       setTimeout(() => {
         modal.style.display = "none";
-      }, 300); // 等待动画结束后再隐藏
+      }, 300);
     }
 
-    // 点击模态框外部关闭
     modal.onclick = function(event) {
       if (event.target === modal) {
         closeModal();
       }
-    }
+    };
 
-    // 监听 ESC 键关闭
     document.addEventListener('keydown', function(event) {
       if (event.key === 'Escape' && modal.style.display === 'flex') {
         closeModal();
       }
+    });
+
+    // ===== 滚动淡入动画系统 =====
+    document.addEventListener('DOMContentLoaded', () => {
+      const fadeElements = document.querySelectorAll('.fade-element');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            } else {
+              entry.target.classList.remove('visible');
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        }
+      );
+
+      fadeElements.forEach(el => observer.observe(el));
     });
   </script>
 </body>
