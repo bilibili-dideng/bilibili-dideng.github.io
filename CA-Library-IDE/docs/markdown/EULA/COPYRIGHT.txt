@@ -1,0 +1,21 @@
+# 版权声明
+
+## 原始作品
+Copyright (C) 2017–2025 ProjectXero  
+保留所有权利。
+
+## 衍生作品（CA Library IDE）
+Copyright (C) 2025 地灯dideng  
+本衍生作品在 GNU General Public License v3.0 下继续发布。
+
+## 开源许可
+本程序为自由软件；你可以依据自由软件基金会发布的 GNU GPLv3（或任何更新版本）之条款，对本程序进行再发布和/或修改。  
+本程序不带任何担保；详情参见随附的 LICENSE 文件。
+
+## 第三方资源
+- 本项目参考了「中文 Minecraft Wiki」的部分技术文档，遵循 CC BY-NC-SA 3.0 协议。  
+- 开发过程中使用了部分开源库，具体许可证信息见 `NOTICE` 文件（如有）。  
+- 本项目遵循与 CA Reforged 一致的开源精神，尊重每一位贡献者。
+
+## 最后更新
+2025年8月30日
