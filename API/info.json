@@ -7,7 +7,7 @@
       "张涧",
       "MC-20018"
     ],
-    "Promotion_slogan":"Code and me",
+    "Promotion_slogan": "Code and me",
     "project": {
       "TkinterTabMore": {
         "introduction": "一个为 Python Tkinter 开发者设计的插件，旨在为字符串输入提供智能补全功能，提升开发效率。",
@@ -16,7 +16,7 @@
       "Minecraft Kibitect": {
         "introduction": "一个为《我的世界》玩家打造的桌面工具箱，已支持存档查看、坐标计算等核心功能。",
         "state": "died",
-        "died_time": "2025/08/15 22:00"
+        "died_time": "2025-08-15 22:00:00"
       }
     },
     "team": {
@@ -36,7 +36,7 @@
     "Development_Log": {
       "Minecraft Kibitect": {
         "v0.0.1-Base": {
-          "time": "2025年4月13日",
+          "time": "2025-04-13",
           "introduction": "发布首个公开版本！包含核心功能：坐标计算器、存档查看器、工具网站集成,但是此工具在2025/08/15 22:00将永久停止更新"
         }
       }
@@ -68,7 +68,7 @@
       "Minecraft Kibitect": {
         "introduction": "一个为《我的世界》玩家打造的桌面工具箱，支持存档查看、工具网站集成等功能，未来将支持建筑生成与资源计算",
         "state": "died",
-        "died_time": "2025/08/15 22:00"
+        "died_time": "2025-08-15 22:00:00"
       }
     },
     "contact": {
@@ -83,7 +83,7 @@
     "name": "Minecraft-Kibitect",
     "state": "died",
     "files": "Not",
-    "died_time": "2025/08/15 22:00"
+    "died_time": "2025-08-15 22:00:00"
   },
   "Ice-Ether-Mod": {
     "name": "Ice-Ether-Mod",
@@ -92,6 +92,7 @@
   },
   "CA-Library-IDE": {
     "state": "Open",
+    "best_version": "v0.0.3-aplha",
     "name": "CA Library IDE",
     "member": [
       "地灯dideng"
