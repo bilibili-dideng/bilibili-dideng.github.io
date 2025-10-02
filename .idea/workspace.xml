@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcf02d14-9446-4ef0-914b-7f795ca7b336" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/_2025_8_27_11_59____.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_2025_8_27_11_59_取消提交了更改_[更改]/shelved.patch" beforeDir="false" />
+    <list default="true" id="dcf02d14-9446-4ef0-914b-7f795ca7b336" name="更改" comment="S">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/cpas.json5" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/API/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/info.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,6 +88,15 @@
       <option name="presentableId" value="Default" />
       <updated>1755165805282</updated>
     </task>
+    <task id="LOCAL-00001" summary="S">
+      <option name="closed" value="true" />
+      <created>1757130713939</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1757130713940</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -104,5 +112,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="S" />
+    <option name="LAST_COMMIT_MESSAGE" value="S" />
   </component>
 </project>
