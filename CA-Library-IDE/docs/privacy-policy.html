@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>隐私政策 - CA Library IDE文档</title>
+  <!-- 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+  <!-- Prism.js 主题 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet">
+  <style>
+    /* 全局重置 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* 主背景：深邃黑蓝紫渐变 */
+    body {
+      background: linear-gradient(40deg, #0a0f25, #0d0a28, #12102a);
+      background-size: 300% 300%;
+      animation: gradientBG 15s ease infinite;
+      color: #c5d8ff;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* 粒子系统 */
+    .particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: float 20s infinite linear;
+    }
+    .particle.small  { width: 1px; height: 1px; background: rgba(120, 180, 255, 0.4); }
+    .particle.medium { width: 2px; height: 2px; background: rgba(100, 150, 240, 0.5); }
+    .particle.large  { width: 3px; height: 3px; background: rgba(80, 130, 220, 0.6); }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-100vh) translateX(100vw); opacity: 0; }
+    }
+    /* 布局 */
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    /* ===== 右上角跳转按钮 ===== */
+    .goto-home-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: rgba(60, 110, 190, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(100, 160, 255, 0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7ea8ff;
+      font-size: 1.8em;
+      text-decoration: none;
+      z-index: 100;
+      font-family: 'Fira Code', monospace;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      /* 发光效果 */
+      text-shadow: 0 0 5px rgba(100, 180, 255, 0.4);
+      box-shadow:
+        0 0 5px rgba(80, 150, 240, 0.3),
+        inset 0 2px 5px rgba(255, 255, 255, 0.1);
+    }
+    /* 悬停效果：上浮 + 发光增强 + 微放大 */
+    .goto-home-btn:hover {
+      transform: translateY(-3px) scale(1.1);
+      background: rgba(80, 140, 220, 0.5);
+      color: #a8d0ff;
+      text-shadow: 0 0 10px rgba(100, 180, 255, 0.7);
+      box-shadow:
+        0 0 10px rgba(100, 180, 255, 0.5),
+        inset 0 2px 5px rgba(255, 255, 255, 0.2);
+    }
+    /* 点击效果 */
+    .goto-home-btn:active {
+      transform: translateY(0) scale(0.95);
+    }
+    /* 呼吸动画 */
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 5px rgba(80, 150, 240, 0.3); }
+      50% { box-shadow: 0 0 12px rgba(100, 180, 255, 0.5); }
+      100% { box-shadow: 0 0 5px rgba(80, 150, 240, 0.3); }
+    }
+    .goto-home-btn {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    /* 侧边栏 */
+    .sidebar {
+      width: 280px;
+      background: rgba(12, 18, 36, 0.7);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(80, 130, 200, 0.2);
+      padding: 28px 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar-header {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #7ea8ff;
+      margin-bottom: 28px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-block;
+      position: relative;
+      text-shadow: 0 0 8px rgba(100, 160, 255, 0.3);
+    }
+    .sidebar-header:hover {
+      transform: translateY(-6px) scale(1.03);
+      color: #a8d0ff;
+      text-shadow: 0 0 14px rgba(100, 180, 255, 0.5),
+                   0 0 20px rgba(80, 150, 240, 0.4);
+    }
+    .sidebar-header:active {
+      transform: translateY(0) scale(1);
+    }
+    .sidebar-group > .sidebar-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 13px;
+      font-weight: 600;
+      color: #8cbfff;
+      cursor: pointer;
+      border-radius: 9px;
+      transition: all 0.2s;
+    }
+    .sidebar-group > .sidebar-label:hover {
+      background: rgba(100, 160, 255, 0.15);
+      color: #a8d0ff;
+    }
+    .sidebar-group > .sidebar-label .arrow {
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid #6caeff;
+      border-bottom: 2px solid #6caeff;
+      transform: rotate(45deg);
+      transition: transform 0.3s ease;
+    }
+    .sidebar-group.open > .sidebar-label .arrow {
+      transform: rotate(-135deg);
+    }
+    .sidebar-group > ul {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      margin-top: 4px;
+    }
+    .sidebar-group.open > ul {
+      max-height: 800px;
+      padding-left: 10px;
+    }
+    .sidebar-group a {
+      display: block;
+      color: #a0b8e0;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 0.95em;
+      transition: all 0.2s;
+      background: transparent;
+    }
+    .sidebar-group a:hover {
+      color: #b8dcff;
+      background: rgba(100, 160, 255, 0.15);
+      transform: translateX(2px);
+    }
+    /* 主内容区域 */
+    .main-content {
+      flex: 1;
+      padding: 40px 60px;
+      overflow-y: auto;
+      position: relative;
+    }
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      font-size: 2.2em;
+      color: #7ea8ff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(100, 160, 255, 0.3);
+    }
+    h2 {
+      font-size: 1.6em;
+      color: #8cbfff;
+      margin: 30px 0 15px;
+      border-bottom: 1px solid rgba(100, 160, 255, 0.2);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-size: 1.3em;
+      color: #a0b8e0;
+      margin: 25px 0 10px;
+    }
+    p {
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    ul, ol {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    code {
+      background: rgba(100, 160, 255, 0.1);
+      color: #a8d0ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      border: 1px solid rgba(100, 160, 255, 0.2);
+    }
+    .alert {
+      background: rgba(60, 110, 190, 0.15);
+      border: 1px solid rgba(100, 160, 255, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 20px 0;
+      display: flex;
+      align-items: flex-start;
+    }
+    .alert svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      fill: #7ea8ff;
+      flex-shrink: 0;
+    }
+    .alert-info {
+      background: rgba(60, 110, 190, 0.1);
+      border-color: rgba(100, 160, 255, 0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(12, 18, 36, 0.5);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(100, 160, 255, 0.1);
+    }
+    th {
+      background: rgba(60, 110, 190, 0.2);
+      color: #8cbfff;
+      font-weight: 600;
+    }
+    /* 导航按钮 */
+    .nav-btn {
+      background: rgba(100, 160, 255, 0.2);
+      color: #7ea8ff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid rgba(100, 160, 255, 0.3);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .nav-btn:hover {
+      background: rgba(100, 160, 255, 0.3);
+      color: #a8d0ff;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <!-- 粒子背景 -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- 右上角返回主页按钮 -->
+  <a href="index.html" class="goto-home-btn"><</a>
+  
+  <div class="container">
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+      <div class="sidebar-header" onclick="window.location.href='index.html'">
+        CA Library IDE文档
+      </div>
+      
+      <!-- 使用条款导航 -->
+      <div class="sidebar-group open">
+        <div class="sidebar-label">
+          使用条款
+          <span class="arrow"></span>
+        </div>
+        <ul>
+          <li><a href="eula.html">用户许可协议 (EULA)</a></li>
+          <li><a href="privacy-policy.html" class="active">隐私政策</a></li>
+          <li><a href="copyright.html">版权声明</a></li>
+        </ul>
+      </div>
+      
+      <!-- 返回主文档链接 -->
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(100, 160, 255, 0.2);">
+        <a href="index.html" style="display: block; color: #8cbfff; text-decoration: none; padding: 10px; border-radius: 6px; background: rgba(100, 160, 255, 0.1); text-align: center; transition: all 0.2s;">
+          ← 返回主文档
+        </a>
+      </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="main-content">
+      <div id="page-privacy-policy" class="page active">
+        <h1>隐私政策</h1>
+        <p><strong>生效日期：2025年11月1日</strong></p>
+        <p><strong>适用范围：CA Library IDE 桌面开发环境</strong></p>
+
+        <h2>1. 我们收集哪些信息</h2>
+        <p>CA Library IDE 是一款本地运行的桌面开发工具，<strong>不收集、不上传、不共享任何用户数据</strong>。我们尊重您的隐私，所有操作均在本地完成。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>权限/功能</th>
+              <th>用途说明</th>
+              <th>是否联网</th>
+              <th>可关闭性</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>读写本地文件系统</td>
+              <td>打开、保存 <code>.json</code> 拓展包文件，读取配置，监控文件/文件夹与日志</td>
+              <td>否</td>
+              <td>用户可自主选择路径</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alert alert-info">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          <div>
+            <strong>重点声明</strong>：
+            <ul style="margin-top: 4px; padding-left: 16px;">
+              <li><strong>我们不会收集任何个人身份信息（PII）</strong>，包括但不限于姓名、邮箱、设备标识、IP 地址等。</li>
+              <li><strong>无广告 SDK、无统计分析组件、无遥测（Telemetry）服务</strong>。</li>
+              <li>所有项目文件、配置、日志均<strong>仅保存于您的本地设备</strong>，您完全掌控数据。</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2>2. 数据存储与共享</h2>
+        <ul>
+          <li><strong>本地优先</strong>：所有拓展包、配置文件、日志均存储在您指定的本地目录中。</li>
+          <li><strong>零上传</strong>：本软件不会将任何数据上传至服务器（因为我也没有服务器）。</li>
+          <li><strong>零数据</strong>：您的数据不会保存与除了软件文件夹以外的任何位置。</li>
+          <li><strong>零共享</strong>：不会与任何第三方（包括 CA Reforged 官方）共享您的数据。</li>
+          <li><strong>彻底删除</strong>：卸载软件文件夹后，所有数据即被清除。</li>
+        </ul>
+
+        <h2>3. 与 CA Reforged 的关系</h2>
+        <ul>
+          <li>CA Library IDE 为 <strong>CA Reforged</strong>（命令助手 Reforged 版）生态的第三方开发工具。</li>
+          <li>本软件由 <strong>地灯dideng</strong> 独立开发，非南鸢晨星或 ProjectXero 官方出品。</li>
+          <li>我们遵循与 CA Reforged 一致的隐私理念：<strong>最小权限、本地优先、透明可信</strong>。</li>
+        </ul>
+
+        <h2>4. 未成年人</h2>
+        <p>未满 18 周岁用户请在监护人指导下使用本软件。本软件不涉及用户注册或数据收集，但建议监护人了解其用途。</p>
+
+        <h2>5. 政策更新</h2>
+        <p>若未来功能调整导致本政策需变更，我们不会公示变更内容。</p>
+        <p>继续使用即视为您接受更新后的政策。</p>
+
+        <h2>6. 联系我们</h2>
+        <p>如您对本隐私政策有任何疑问，请通过以下方式联系作者 <strong>地灯dideng</strong>：</p>
+        <ul>
+          <li><strong>邮箱</strong>：<a href="mailto:3483434955@qq.com" style="color: #a0d8ff; text-decoration: none; padding: 2px 0; border-bottom: 1px dotted rgba(160, 216, 255, 0.5); transition: all 0.2s;">3483434955@qq.com</a></li>
+          <li><strong>GitHub Issues</strong>：<a href="https://github.com/bilibili-dideng/CA-Library-IDE/issues" target="_blank" style="color: #a0d8ff; text-decoration: none; padding: 2px 0; border-bottom: 1px dotted rgba(160, 216, 255, 0.5); transition: all 0.2s;">提交问题</a></li>
+        </ul>
+
+        <div style="text-align: center; margin-top: 40px; color: #8cbfff; font-size: 0.9em;">
+          <p><strong>我们坚信：您的代码，您的数据，完全属于您。</strong></p>
+          <p>—— 地灯dideng</p>
+        </div>
+
+        <p style="margin-top: 40px; color: #889; font-size: 0.9em;"><strong>最后更新：2025年11月1日</strong></p>
+
+        <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+          <a href="eula.html" class="nav-btn">← 上一页：用户许可协议 (EULA)</a>
+          <a href="copyright.html" class="nav-btn">下一页：版权声明 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 粒子系统
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        const size = Math.random() * 3 + 1;
+        const sizeClass = size < 1.5 ? 'small' : size < 2.5 ? 'medium' : 'large';
+        
+        particle.className = `particle ${sizeClass}`;
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+    });
+  </script>
+</body>
+</html>

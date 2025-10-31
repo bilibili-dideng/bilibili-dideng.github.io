@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcf02d14-9446-4ef0-914b-7f795ca7b336" name="更改" comment="S">
+    <list default="true" id="dcf02d14-9446-4ef0-914b-7f795ca7b336" name="更改" comment="a">
+      <change beforePath="$PROJECT_DIR$/.idea/stat.log" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stat.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/cpas.json5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/info.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +95,23 @@
       <option name="project" value="LOCAL" />
       <updated>1757130713940</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="S">
+      <option name="closed" value="true" />
+      <created>1759404262797</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759404262797</updated>
+    </task>
+    <task id="LOCAL-00003" summary="a">
+      <option name="closed" value="true" />
+      <created>1759404276658</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1759404276658</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -115,6 +130,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="S" />
-    <option name="LAST_COMMIT_MESSAGE" value="S" />
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
   </component>
 </project>
