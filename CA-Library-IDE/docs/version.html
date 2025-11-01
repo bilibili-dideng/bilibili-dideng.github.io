@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>版本更新记录 - CA Library IDE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a1428 0%, #1a2a4a 50%, #0a1428 100%);
+      color: #b8d0ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* 粒子背景 */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+    }
+    
+    .particle.small { width: 2px; height: 2px; }
+    .particle.medium { width: 4px; height: 4px; }
+    .particle.large { width: 6px; height: 6px; }
+    
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-20px) translateX(10px); }
+      50% { transform: translateY(-40px) translateX(0); }
+      75% { transform: translateY(-20px) translateX(-10px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+    
+    /* 容器 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    /* 头部 */
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .goto-home-btn {
+      display: inline-block;
+      background: rgba(100, 160, 255, 0.2);
+      color: #7ea8ff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(100, 160, 255, 0.3);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+    }
+    
+    .goto-home-btn:hover {
+      background: rgba(100, 160, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(100, 160, 255, 0.2);
+    }
+    
+    h1 {
+      font-size: 2.5em;
+      font-weight: 600;
+      text-shadow:
+        0 0 8px rgba(100, 180, 255, 0.4),
+        0 0 15px rgba(80, 150, 240, 0.4),
+        0 0 20px rgba(60, 130, 220, 0.3);
+      animation: glowPulse 2.5s ease-in-out infinite alternate;
+      border-bottom: 1px solid rgba(100, 160, 240, 0.3);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes glowPulse {
+      0% { opacity: 0.9; }
+      50% { opacity: 1; }
+      100% { opacity: 0.9; }
+    }
+    
+    /* 内容区域 */
+    .content {
+      background: rgba(20, 35, 65, 0.3);
+      border-radius: 15px;
+      padding: 40px;
+      border: 1px solid rgba(100, 150, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    h2, h3, h4 {
+      position: relative;
+      color: #7ecfff;
+      margin: 1.5em 0 0.8em;
+      font-family: 'Inter', sans-serif;
+      transition: text-shadow 0.3s ease;
+    }
+    
+    h2 {
+      font-size: 1.8em;
+      font-weight: 600;
+      text-shadow:
+        0 0 8px rgba(100, 180, 255, 0.4),
+        0 0 15px rgba(80, 150, 240, 0.4),
+        0 0 20px rgba(60, 130, 220, 0.3);
+      animation: glowPulse 2.5s ease-in-out infinite alternate;
+      border-bottom: 1px solid rgba(100, 160, 240, 0.3);
+      padding-bottom: 6px;
+    }
+    
+    h3 {
+      font-size: 1.5em;
+      font-weight: 600;
+      text-shadow:
+        0 0 6px rgba(100, 180, 255, 0.35),
+        0 0 12px rgba(80, 150, 240, 0.3),
+        0 0 16px rgba(60, 130, 220, 0.2);
+      animation: glowPulse 3s ease-in-out infinite alternate;
+    }
+    
+    h4 {
+      font-size: 1.3em;
+      font-weight: 500;
+      text-shadow:
+        0 0 4px rgba(100, 180, 255, 0.3),
+        0 0 8px rgba(80, 150, 240, 0.25);
+    }
+    
+    p, li {
+      color: #b8d0ff;
+      margin-bottom: 1em;
+      line-height: 1.6;
+    }
+    
+    ol {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+    
+    li {
+      margin-bottom: 8px;
+    }
+    
+    /* 导航按钮 */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    
+    .nav-btn {
+      background: rgba(100, 160, 255, 0.2);
+      color: #7ea8ff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(100, 160, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn:hover {
+      background: rgba(100, 160, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(100, 160, 255, 0.2);
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px;
+      }
+      
+      .content {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      h2 {
+        font-size: 1.5em;
+      }
+      
+      .nav-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .nav-btn {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles"></div>
+  
+  <div class="container">
+    <div class="header">
+      <a href="index.html" class="goto-home-btn">← 返回首页</a>
+      <h1>版本更新记录</h1>
+    </div>
+      <div class="content">
+      <h3>更新重要度版本排序如下</h3>
+      <ol>
+        <li>更新重要度 &lt; 190 : 修订号+1</li>
+        <li>更新重要度 &lt; 320 : 次版本号+1</li>
+        <li>更新重要度 &gt;= 320 : 主版本号+1</li>
+      </ol>
+      <p>更新重要度计算：((((加入功能数 * 2) + (功能子项数 * 0.9)) + (移除功能数 * 1.5) + 优化功能数 * 1.2) * 1.1)² （保留2位小数）</p>
+      
+      <h2>alpha版本</h2>
+      
+      <h3>Version 0.0.0-alpha</h3>
+      <h4>一切的开始</h4>
+      <h4>更新重要度：((((3×2 + 0×0.9) + 0×1.5 + 0×1.2) × 1.1)²) = ((6 × 1.1)²) = 6.6² = 43.56</h4>
+      <ol>
+        <li>基础IDE开发环境功能</li>
+        <li>扩展包功能</li>
+        <li>加入主题功能</li>
+      </ol>
+      
+      <h3>Version 0.0.1-alpha</h3>
+      <h4>更新重要度：((((5×2 + 0×0.9) + 0×1.5 + 1×1.2) × 1.1)²) = (((10 + 0) + 0 + 1.2) × 1.1)² = (11.2 × 1.1)² = 12.32² ≈ 151.78</h4>
+      <ol>
+        <li>加入了关于</li>
+        <li>加入了帮助/查看我的世界指令</li>
+        <li>加入了清除日志</li>
+        <li>加入内核cicore</li>
+        <li>加入了卡密功能</li>
+        <li>优化扩展包加载速度</li>
+      </ol>
+      
+      <h3>Version 0.0.2-alpha</h3>
+      <h4>更新重要度：((((4×2 + 0×0.9) + 1×1.5 + 0×1.2) × 1.1)²) = (((8 + 0) + 1.5 + 0) × 1.1)² = (9.5 × 1.1)² = 10.45² ≈ 109.20</h4>
+      <ol>
+        <li>加入了图形化JSON编辑器</li>
+        <li>移除了"帮助"，现在改为"工具"</li>
+        <li>让扩展包可以加入高亮显示</li>
+        <li>加入了UUID生成器</li>
+        <li>加入了自动检测更新</li>
+      </ol>
+      
+      <h3>Version 1.0.0-alpha</h3>
+      <h4>注：原来的Version 0.0.3，但是结合了0.0.3.2-alpha的更新</h4>
+      <h4>而且比原来的Version 0.0.0 到 Version 0.0.2加起来的更新重要度还高很多很多！</h4>
+      <h4>更新重要度：((((9×2 + 2×0.9) + 1×1.5 + 1×1.2) × 1.1)²) = (((18 + 1.8) + 1.5 + 1.2) × 1.1)² = (22.5 × 1.1)² = 24.75² ≈ 612.56</h4>
+      <ol>
+        <li>加入了加载动画</li>
+        <li>加入了关闭文件</li>
+        <li>加入了主题编辑器</li>
+        <li>加入了智能建议</li>
+        <li>让扩展包添加关键词可以自定义父节点</li>
+        <li>简化上边栏</li>
+        <li>优化了错误报告</li>
+        <li>加入了文件夹和文件更新后自动更新</li>
+        <li>加入了自动打开上一次退出前打开的文件夹和文件</li>
+        <li>加入卸载文件夹</li>
+        <li>移除了卡密</li>
+        <li>加入文件面板右键菜单</li>
+        <ol>
+          <li>新建文件</li>
+          <li>新建文件夹</li>
+          <li>删除文件/文件夹</li>
+          <li>重命名文件/文件夹</li>
+          <li>复制文件/文件夹路径</li>
+          <li>打开文件所在文件夹</li>
+          <li>复制文件/文件夹</li>
+          <li>粘贴文件/文件夹</li>
+          <li>展开所有文件夹</li>
+          <li>收起所有文件夹</li>
+        </ol>
+      </ol>
+      
+      <h2>beta版本</h2>
+      
+      <h3>Version 0.0.0-beta</h3>
+      <h4>终于，beta来了！</h4>
+      <h4>更新重要度：((((1×2 + 0×0.9) + 1×1.5 + 1×1.2) × 1.1)²) = (4.7×1.1)² = 5.17² ≈ 26.73</h4>
+      <ol>
+        <li>优化了一些已知问题</li>
+        <li>加入搜索和替换功能</li>
+        <li>删除了不必要的代码</li>
+      </ol>
+      
+      <h3>版本:</h3>
+      <p>alpha -&gt; <br>
+      beta(Now) -&gt; <br>
+      rc -&gt; <br>
+      release</p>
+      
+      <div class="nav-buttons">
+        <a href="index.html" class="nav-btn">← 返回首页</a>
+        <a href="eula.html" target="_blank" class="nav-btn">继续阅读：用户许可协议 (EULA) →</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== 粒子背景 =====
+    const particlesBg = document.getElementById('particles');
+    const types = ['small', 'medium', 'large'];
+    const colors = ['rgba(120, 180, 255, 0.3)', 'rgba(100, 150, 240, 0.5)', 'rgba(80, 130, 220, 0.6)'];
+    for (let i = 0; i < 150; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.classList.add(types[Math.floor(Math.random() * 3)]);
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.top = Math.random() * 100 + 'vh';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.opacity = Math.random() * 0.4 + 0.2;
+      p.style.animationDuration = Math.random() * 20 + 10 + 's';
+      p.style.animationDelay = Math.random() * 5 + 's';
+      particlesBg.appendChild(p);
+    }
+  </script>
+  
+  <!-- Prism.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>
