@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>地灯 dideng - 我的世界与代码</title>
+  <meta name="description" content="地灯 dideng - Minecraft与编程开发者，DGF Studio创始人，专注于Python开发与Minecraft工具制作">
+  <title>地灯 dideng - Minecraft与编程开发者</title>
   <style>
-    /* 蓝色主题变量 */
+    /* 现代蓝色主题变量 */
     :root {
-      --primary: #1e6fd9;        /* 主蓝色 */
-      --primary-light: #3a89ff;  /* 亮蓝 */
-      --primary-dark: #0052a3;   /* 深蓝 */
-      --bg-light: #f0f5ff;       /* 浅蓝灰背景 */
-      --bg-card: #ffffff;        /* 卡片白 */
-      --text: #333;
-      --text-light: #f0f0f0;
-      --border: #d0e0f0;
-      --shadow: rgba(30, 111, 217, 0.1);
+      --primary: #2563eb;        /* 现代蓝色 */
+      --primary-light: #3b82f6;  /* 亮蓝 */
+      --primary-dark: #1d4ed8;   /* 深蓝 */
+      --secondary: #8b5cf6;       /* 紫色 */
+      --accent: #06b6d4;         /* 青色 */
+      --bg-dark: #0f172a;        /* 深色背景 */
+      --bg-card: #1e293b;        /* 卡片背景 */
+      --bg-light: #f8fafc;       /* 浅色背景 */
+      --text: #f1f5f9;           /* 主文字 */
+      --text-muted: #94a3b8;     /* 次要文字 */
+      --border: #334155;         /* 边框 */
+      --shadow: rgba(0, 0, 0, 0.25);
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
     }
 
     * {
@@ -25,75 +30,126 @@
     }
 
     body {
-      font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-      background-color: var(--bg-light);
+      font-family: 'Inter', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      background: var(--bg-dark);
       color: var(--text);
       line-height: 1.7;
-      background-image:
-        radial-gradient(circle at 20% 30%, rgba(58, 137, 255, 0.05) 0%, transparent 25%),
-        radial-gradient(circle at 80% 70%, rgba(30, 111, 217, 0.05) 0%, transparent 25%);
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 背景动画 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+      z-index: -1;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(180deg); }
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 0 20px;
     }
 
     /* 导航栏 */
     header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      border-radius: 12px 12px 0 0;
-      padding: 1rem 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 20px var(--shadow);
-      position: sticky;
+      padding: 1.5rem 0;
+      position: fixed;
       top: 0;
-      z-index: 100;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     }
 
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
     }
 
     .logo-text {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 800;
-      color: var(--primary);
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .logo-text span {
-      color: var(--primary-light);
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
     }
 
     .nav-links a {
-      margin-left: 2rem;
-      color: var(--text);
+      color: var(--text-muted);
       text-decoration: none;
       font-weight: 600;
       font-size: 1.1rem;
       position: relative;
-      transition: color 0.3s;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0;
     }
 
     .nav-links a:hover {
-      color: var(--primary);
+      color: var(--text);
     }
 
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -5px;
+      bottom: 0;
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--primary-light);
-      transition: width 0.3s;
+      background: var(--gradient);
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover::after {
@@ -102,288 +158,558 @@
 
     /* 英雄区域 */
     .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 6rem 2rem;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: var(--text-light);
-      border-radius: 16px;
-      margin-bottom: 3rem;
-      box-shadow: 0 10px 30px rgba(30, 111, 217, 0.2);
+      padding: 8rem 2rem 4rem;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      animation: fadeInUp 1s ease-out;
     }
 
     .hero h1 {
-      font-size: 3.8rem;
-      margin-bottom: 1rem;
+      font-size: 4.5rem;
       font-weight: 800;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero h1 span {
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
     }
 
     .hero p {
       font-size: 1.4rem;
-      max-width: 800px;
-      margin: 1rem auto;
-      opacity: 0.9;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .btn {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       padding: 1rem 2.5rem;
-      font-size: 1.2rem;
       border-radius: 50px;
-      margin: 2rem 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
       transition: all 0.3s ease;
+      border: 2px solid transparent;
     }
 
     .btn-primary {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 5px 15px rgba(30, 111, 217, 0.3);
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
     }
 
     .btn-primary:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(30, 111, 217, 0.5);
+      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
     }
 
-    /* 项目卡片 */
-    .projects {
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    /* 滚动指示器 */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* 工作室区域 */
+    .studio-section {
+      padding: 6rem 0;
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 3rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .studio-card {
+      max-width: 800px;
+      margin: 0 auto 4rem;
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .studio-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .studio-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .studio-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .studio-description {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* 项目区域 */
+    .projects-section {
+      padding: 6rem 0;
+    }
+
+    .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 4rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
     }
 
     .project-card {
       background: var(--bg-card);
       border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 5px 20px var(--shadow);
+      padding: 2.5rem;
       border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+      transform: scaleX(0);
       transition: transform 0.3s ease;
     }
 
-    .project-card:hover {
-      transform: translateY(-10px);
+    .project-card:hover::before {
+      transform: scaleX(1);
     }
 
-    .project-title {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-      font-weight: 700;
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
 
     .project-tag {
       display: inline-block;
-      padding: 0.3rem 0.8rem;
-      background: var(--primary-light);
+      padding: 0.4rem 1rem;
+      background: var(--gradient);
       color: white;
-      border-radius: 50px;
+      border-radius: 20px;
       font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-title {
+      font-size: 1.8rem;
+      font-weight: 700;
       margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .project-description {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .project-link:hover {
+      background: var(--primary);
+      transform: translateX(5px);
     }
 
     /* 社交链接 */
-    .social-links {
-      margin: 3rem 0;
+    .social-section {
+      padding: 4rem 0;
       text-align: center;
+      background: rgba(30, 41, 59, 0.5);
     }
 
-    .social-links a {
-      display: inline-block;
-      margin: 0 1rem;
-      color: var(--primary);
+    .social-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 2rem;
+      background: var(--bg-card);
+      color: var(--text);
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
-      transition: color 0.3s;
+      border-radius: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border);
     }
 
-    .social-links a:hover {
-      color: var(--primary-dark);
+    .social-link:hover {
+      background: var(--gradient);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-link i {
+      font-size: 1.3rem;
     }
 
     /* 页脚 */
     footer {
       text-align: center;
-      padding: 3rem 1rem 2rem;
-      color: #666;
-      font-size: 0.95rem;
-      margin-top: 4rem;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+      font-size: 1rem;
       border-top: 1px solid var(--border);
     }
 
-    footer a {
-      color: var(--primary);
-      text-decoration: none;
+    footer p {
+      margin-bottom: 0.5rem;
     }
 
-    footer a:hover {
-      text-decoration: underline;
+    /* 动画 */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* 响应式 */
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    /* 响应式设计 */
     @media (max-width: 768px) {
       .hero h1 {
-        font-size: 2.8rem;
+        font-size: 3rem;
       }
+      
       .hero p {
         font-size: 1.2rem;
       }
-      .nav-links a {
-        margin-left: 1rem;
-        font-size: 1rem;
+      
+      .btn-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .nav-links {
+        gap: 1.5rem;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .social-links {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2.2rem;
+      }
+      
+      .studio-card {
+        padding: 2rem;
+      }
+      
+      .project-card {
+        padding: 2rem;
       }
     }
   </style>
   <!-- Font Awesome 图标 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="container">
-
-    <!-- 导航栏 -->
-    <header>
-      <div class="navbar">
-        <div class="logo-text">地灯 <span>dideng</span></div>
-        <div class="nav-links">
-          <a href="#projects">项目</a>
-          <a href="https://github.com/bilibili-dideng" target="_blank">GitHub</a>
-        </div>
+  <!-- 导航栏 -->
+  <header id="header">
+    <div class="navbar">
+      <div class="logo">
+        <div class="logo-icon">D</div>
+        <div class="logo-text">地灯 dideng</div>
       </div>
-    </header>
+      <div class="nav-links">
+        <a href="#studio">工作室</a>
+        <a href="#projects">项目</a>
+        <a href="#contact">联系</a>
+        <a href="https://github.com/bilibili-dideng" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </header>
 
-    <!-- 英雄区域 -->
-    <section class="hero">
-      <h1>你好，我是<span>地灯dideng</span></h1>
-      <p>一名热爱《我的世界》与编程的开发者，正在用 Python 构建属于我的工具世界。</p>
-      <a href="#projects" class="btn btn-primary">
+  <!-- 英雄区域 -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>你好，我是<span>地灯 dideng</span></h1>
+      <p>一名热爱《我的世界》与编程的开发者，专注于Python开发与Minecraft工具制作，DGF Studio创始人</p>
+      <div class="btn-group">
+        <a href="#projects" class="btn btn-primary">
+          <i class="fas fa-rocket"></i>
           查看我的项目
-      </a>
-    </section>
-
-    <!-- 项目 -->
-    <section id="projects">
-
-      <h2 style="text-align:center; font-size:2.5rem; color:var(--primary); margin-bottom:3rem;">DGF Studio</h2>
-
-      <div style="
-        max-width: 600px;
-        margin: 0 auto 3rem;
-        padding: 2rem;
-        background: linear-gradient(135deg, #1e6fd9, #0052a3);
-        color: white;
-        border-radius: 16px;
-        box-shadow: 0 8px 25px rgba(30, 111, 217, 0.2);
-        transition: transform 0.3s ease;
-      " onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-        <h3 style="font-size: 1.8rem; margin-bottom: 0.8rem;">🚀 DGF Studio</h3>
-        <p style="margin-bottom: 1.5rem; opacity: 0.9;">我们致力于开发有趣的 Minecraft 工具与项目</p>
-        <a href="https://dgf-studio.mysxl.cn/" target="_blank" style="
-          display: inline-block;
-          padding: 0.8rem 2rem;
-          background: white;
-          color: var(--primary);
-          text-decoration: none;
-          border-radius: 50px;
-          font-weight: bold;
-          transition: background 0.3s;
-        " onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='white'">
-          访问工作室网站 (老)
         </a>
-        <a href="/DGF-Studio/index.html" target="_blank" style="
-          display: inline-block;
-          padding: 0.8rem 2rem;
-          background: white;
-          color: var(--primary);
-          text-decoration: none;
-          border-radius: 50px;
-          font-weight: bold;
-          transition: background 0.3s;
-        " onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='white'">
-          访问工作室网站 (新)
+        <a href="#contact" class="btn btn-secondary">
+          <i class="fas fa-envelope"></i>
+          联系我
         </a>
       </div>
+    </div>
+    <div class="scroll-indicator">
+      <i class="fas fa-chevron-down" style="font-size: 2rem; color: var(--text-muted);"></i>
+    </div>
+  </section>
 
-      <h2 style="text-align:center; font-size:2.5rem; color:var(--primary); margin-bottom:3rem;">我的项目</h2>
-      <div class="projects">
-
-        <!-- Minecraft Kibitect -->
-        <div class="project-card">
-          <div class="project-tag">Python / PySide6</div>
-          <h3 class="project-title">Minecraft Kibitect</h3>
-          <p>一个为《我的世界》玩家打造的桌面工具箱，支持存档查看、工具网站集成等功能，未来将支持建筑生成与资源计算，在2025/08/15 22:00将永久停止更新！</p>
-          <a href="" style="color:var(--primary); text-decoration:underline; margin-top:1rem; display:inline-block;">
-            在2025/08/15 22:00将永久停止更新！
+  <!-- 工作室区域 -->
+  <section id="studio" class="studio-section">
+    <div class="container">
+      <h2 class="section-title">DGF Studio</h2>
+      <div class="studio-card fade-in">
+        <div class="studio-icon">🚀</div>
+        <h3 class="studio-title">DGF Studio</h3>
+        <p class="studio-description">我们致力于开发有趣的 Minecraft 工具与项目，专注于为玩家提供更好的游戏体验和开发工具</p>
+        <div class="btn-group">
+          <a href="/DGF-Studio/index.html" target="_blank" class="btn btn-primary">
+            <i class="fas fa-external-link-alt"></i>
+            访问工作室网站
           </a>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="project-card">
-          <div class="project-tag">Java</div>
-          <h3 class="project-title">Ice Ether Mod</h3>
-          <p>一个MC的Mod，添加冰之以太，冰之以太块，冰之以太套，冰之以太苹果等有趣的东西</p>
-          <a href="/Ice-Ether-Mod/index.html" target="_blank" style="
-          display: inline-block;
-          padding: 0.8rem 2rem;
-          background: #1679FF;
-          text-decoration: none;
-          border-radius: 50px;
-          font-weight: bold;
-          transition: background 0.3s;
-        " onmouseover="this.style.background='purple'" onmouseout="this.style.background='#1679FF'">
-          访问项目网站
-        </a>
+  <!-- 项目区域 -->
+  <section id="projects" class="projects-section">
+    <div class="container">
+      <h2 class="section-title">我的项目</h2>
+      <div class="projects-grid">
+        
+        <!-- Minecraft Kibitect -->
+        <div class="project-card fade-in">
+          <span class="project-tag">Python / PySide6</span>
+          <h3 class="project-title">Minecraft Kibitect</h3>
+          <p class="project-description">一个为《我的世界》玩家打造的桌面工具箱，支持存档查看、工具网站集成等功能，未来将支持建筑生成与资源计算。</p>
+          <div style="color: var(--accent); font-weight: 600; margin-bottom: 1.5rem;">
+            <i class="fas fa-clock"></i> 在2025/08/15 22:00将永久停止更新！
+          </div>
         </div>
 
-        <!-- CA Library IDE -->
-        <div class="project-card">
-          <div class="project-tag">开发中</div>
-          <h3 class="project-title">CA Library IDE</h3>
-          <p>专为CA拓展包设计的集成开发环境，支持行号、主题、CA关键字插入、自动缩进、结构显示、文件树、JSON格式化和拓展包扩展功能。</p>
-          <a href="/CA-Library-IDE/index.html" target="_blank" style="
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            background: var(--primary-light);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: background 0.3s;
-          " onmouseover="this.style.background='var(--primary-dark)'" onmouseout="this.style.background='var(--primary-light)'">
+        <!-- Ice Ether Mod -->
+        <div class="project-card fade-in">
+          <span class="project-tag">Java / Minecraft</span>
+          <h3 class="project-title">Ice Ether Mod</h3>
+          <p class="project-description">一个MC的Mod，添加冰之以太，冰之以太块，冰之以太套，冰之以太苹果等有趣的东西，为游戏增添新的元素和玩法。</p>
+          <a href="/Ice-Ether-Mod/index.html" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i>
             访问项目网站
           </a>
         </div>
 
-        <div class="project-card">
-          <div class="project-tag">开发中</div>
+        <!-- CA Library IDE -->
+        <div class="project-card fade-in">
+          <span class="project-tag">Python / PyQt5</span>
+          <h3 class="project-title">CA Library IDE</h3>
+          <p class="project-description">专为CA拓展包设计的集成开发环境，支持行号、主题、CA关键字插入、自动缩进、结构显示、文件树、JSON格式化和拓展包扩展功能。</p>
+          <a href="/CA-Library-IDE/index.html" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i>
+            访问项目网站
+          </a>
+        </div>
+
+        <!-- 更多项目 -->
+        <div class="project-card fade-in">
+          <span class="project-tag">学习探索</span>
           <h3 class="project-title">更多项目</h3>
-          <p>正在学习更多技术，未来计划开发MC MOD等。</p>
+          <p class="project-description">正在学习更多技术，未来计划开发MC MOD、Web应用等更多有趣的项目，持续提升开发能力。</p>
+          <a href="https://github.com/bilibili-dideng" target="_blank" class="project-link">
+            <i class="fab fa-github"></i>
+            关注GitHub
+          </a>
         </div>
 
       </div>
-    </section>
-
-    <!-- 社交链接 -->
-    <div class="social-links">
-      <a href="https://space.bilibili.com/1749090711" target="_blank"><i class="fab fa-bilibili"></i> B站</a>
-      <a href="https://github.com/bilibili-dideng" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-      <a href="mailto:3483434955@qq.com"><i class="fas fa-envelope"></i> 邮箱</a>
     </div>
+  </section>
 
-    <!-- 页脚 -->
-    <footer>
+  <!-- 联系区域 -->
+  <section id="contact" class="social-section">
+    <div class="container">
+      <h2 class="social-title">联系我</h2>
+      <div class="social-links">
+        <a href="https://space.bilibili.com/1749090711" target="_blank" class="social-link">
+          <i class="fab fa-bilibili"></i>
+          B站
+        </a>
+        <a href="https://github.com/bilibili-dideng" target="_blank" class="social-link">
+          <i class="fab fa-github"></i>
+          GitHub
+        </a>
+        <a href="mailto:3483434955@qq.com" class="social-link">
+          <i class="fas fa-envelope"></i>
+          邮箱
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
       <p>© 2025 <strong>地灯 dideng</strong> | 用代码点亮世界</p>
-    </footer>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">DGF Studio - Code and me</p>
+    </div>
+  </footer>
 
-  </div>
+  <script>
+    // 滚动效果
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
 
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        if (href && href !== '#') {
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+
+    // 滚动动画
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // 页面加载动画
+    window.addEventListener('load', function() {
+      document.body.style.opacity = '1';
+    });
+
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease';
+  </script>
 </body>
 </html>
